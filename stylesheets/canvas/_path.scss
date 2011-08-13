@@ -1,0 +1,63 @@
+@function move-to($x, $y) {
+  @return canvas-path('move', $x, $y);
+}
+
+@function line-to($x, $y) {
+  @return canvas-path('line', $x, $y);
+}
+
+@function arc($x, $y, $radius, $angle1, $angle2) {
+  @return canvas-path('arc', $x, $y, $radius, $angle1, $angle2);
+}
+
+@function curve-to($x1, $y1, $x2, $y2, $x3, $y3) {
+  @return canvas-path('curve', $x1, $y1, $x2, $y2, $x3, $y3);
+}
+
+@function rectangle($x1, $y1, $x2, $y2) {
+  @return (
+    move-to($x1, $y1)
+    line-to($x2, $y1)
+    line-to($x2, $y2)
+    line-to($x1, $y2)
+    close
+  );
+}
+
+@function circle($x, $y, $radius) {
+  @return arc($x, $y, $radius, 0, 360);
+}
+
+@function rounded-rectangle($x1, $y1, $x2, $y2, $x_radius, $y_radius: $x_radius) {
+  $max_x_radius: ($x2 - $x1) / 2.0;
+  $max_y_radius: ($y2 - $y1) / 2.0;
+  @if $x_radius > $max_x_radius {
+    $x_radius: $max_x_radius;
+  }
+  @if $y_radius > $max_y_radius {
+    $y_radius: $max_y_radius;
+  }
+  $half_x_radius: $x_radius / 2.0;
+  $half_y_radius: $y_radius / 2.0;
+  @return (
+    move-to($x1 + $x_radius, $y1)
+    line-to($x2 - $x_radius, $y1)
+    curve-to($x2 - $half_x_radius, $y1, $x2, $y1 + $half_y_radius, $x2, $y1 + $y_radius)
+    line-to($x2, $y2 - $y_radius)
+    curve-to($x2, $y2 - $half_y_radius, $x2 - $half_x_radius, $y2, $x2 - $x_radius, $y2)
+    line-to($x1 + $x_radius, $y2)
+    curve-to($x1 + $half_x_radius, $y2, $x1, $y2 - $half_y_radius, $x1, $y2 - $y_radius)
+    line-to($x1, $y1 + $y_radius)
+    curve-to($x1, $y1 + $half_y_radius, $x1 + $half_x_radius, $y1, $x1 + $x_radius, $y1)
+    close
+  );
+}
+
+@function triangle($x1, $y1, $x2, $y2, $x3, $y3) {
+  @return (
+    move-to($x1, $y1)
+    line-to($x2, $y2)
+    line-to($x3, $y3)
+    close
+  )
+}

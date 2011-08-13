@@ -1,0 +1,43 @@
+@function line-width($width) {
+  @return canvas-context('line_width', $width);
+}
+
+@function line-cap($type) {
+  @return canvas-context('line_cap', $type);
+}
+
+@function line-join($type) {
+  @return canvas-context('line_join', $type);
+}
+
+@function miter-limit($limit) {
+  @return canvas-context('miter_limit', $limit);
+}
+
+@function antialias($type) {
+  @return canvas-context('antialias', $type);
+}
+
+@function fill-rule($type) {
+  @return canvas-context('fill_rule', $type);
+}
+
+@function tolerance($level) {
+  @return canvas-context('tolerance', $level);
+}
+
+@function translate($x, $y) {
+  @return canvas-context('translate', $x, $y);
+}
+
+@function scale($x, $y) {
+  @return canvas-context('scale', $x, $y);
+}
+
+@function rotate($angle) {
+  @return canvas-context('rotate', $angle);
+}
+
+@function transform($xx: 1.0, $yx: 0.0, $xy: 0.0, $yy: 1.0, $x0: 0.0, $y0: 0.0) {
+  @return canvas-context('transform', $xx, $yx, $xy, $yy, $x0, $y0);
+}
