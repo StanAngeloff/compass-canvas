@@ -57,11 +57,11 @@ module Compass::Canvas::Backend
       when :push
         @context.push_group
       when :pop
-        @context.pop_group
+        @context.pop_group_to_source
       when :group
         @context.new_sub_path
       when :clip
-        @context.clip
+        @context.clip_preserve
       when :unclip
         @context.reset_clip
       when :close
