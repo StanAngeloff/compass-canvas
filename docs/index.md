@@ -286,6 +286,29 @@ html {
 }
 ```
 
+### Saving to Disk
+
+The `canvas` function has several overloads. In its default form, it takes `width` and `height`.
+The final canvas is serialized as Base64 encoded Data URI.
+
+Most modern browsers will be happy with this. However, if you have to support Internet Explorer 7 or if you are planning on using [sprites][compass-sprites], you would want the data saved on disk.
+Simply pass a filename as the first argument to the `canvas` function and the image will be saved in your configured [images directory][images-dir].
+
+Wrap the code in [`image-url`][image-url] to have the correct relative path and cache buster applied.
+
+    @import 'canvas';
+
+    html {
+      background: image-url(canvas('file.png', 320, 200,
+        brush(#ccc)
+        paint
+      ));
+    }
+
+  [compass-sprites]: http://compass-style.org/reference/compass/utilities/sprites/
+  [images-dir]:      http://compass-style.org/help/tutorials/configuration-reference/
+  [image-url]:       http://compass-style.org/reference/compass/helpers/urls/#image-url
+
 ### Paths revised
 
 Now that you know how to define and draw a single shape, let's talk more about paths.
@@ -679,6 +702,34 @@ html {
 The order of transformations matters. In the example above, moving `translate` before `rotate` would yield different results.
 
 Note the `fill` and `stroke` actions are placed after the `restore` action otherwise the line width for the `stroke` action will be scaled as well.
+
+<a name="arc-reverse"></a>
+<a name="arc"></a>
+<a name="brush"></a>
+<a name="circle"></a>
+<a name="curve-to"></a>
+<a name="dash-pattern"></a>
+<a name="fill-rule-even-odd"></a>
+<a name="fill-rule-winding"></a>
+<a name="fill-rule"></a>
+<a name="fill"></a>
+<a name="line-cap-butt"></a>
+<a name="line-cap-round"></a>
+<a name="line-cap-square"></a>
+<a name="line-to"></a>
+<a name="line-width"></a>
+<a name="move-to"></a>
+<a name="paint"></a>
+<a name="rectangle"></a>
+<a name="reset"></a>
+<a name="restore"></a>
+<a name="rotate"></a>
+<a name="rounded-rectangle"></a>
+<a name="save"></a>
+<a name="scale"></a>
+<a name="stroke"></a>
+<a name="translate"></a>
+<a name="triangle"></a>
 
 Reference (missing)
 -------------------

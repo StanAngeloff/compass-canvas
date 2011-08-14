@@ -6,6 +6,8 @@
 </head>
 <body>
 
+<a href="https://github.com/StanAngeloff/compass-canvas/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
+
 <article id=main>
 <h1>compass-canvas</h1>
 
@@ -246,6 +248,26 @@ html {
 
 </div>
 
+
+<h3>Saving to Disk</h3>
+
+<p>The <code>canvas</code> function has several overloads. In its default form, it takes <code>width</code> and <code>height</code>.
+The final canvas is serialized as Base64 encoded Data URI.</p>
+
+<p>Most modern browsers will be happy with this. However, if you have to support Internet Explorer 7 or if you are planning on using <a href="http://compass-style.org/reference/compass/utilities/sprites/">sprites</a>, you would want the data saved on disk.
+Simply pass a filename as the first argument to the <code>canvas</code> function and the image will be saved in your configured <a href="http://compass-style.org/help/tutorials/configuration-reference/">images directory</a>.</p>
+
+<p>Wrap the code in <a href="http://compass-style.org/reference/compass/helpers/urls/#image-url"><code>image-url</code></a> to have the correct relative path and cache buster applied.</p>
+
+<pre><code>@import 'canvas';
+
+html {
+  background: image-url(canvas('file.png', 320, 200,
+    brush(#ccc)
+    paint
+  ));
+}
+</code></pre>
 
 <h3>Paths revised</h3>
 
@@ -756,6 +778,34 @@ html {
 <p>The order of transformations matters. In the example above, moving <code>translate</code> before <code>rotate</code> would yield different results.</p>
 
 <p>Note the <code>fill</code> and <code>stroke</code> actions are placed after the <code>restore</code> action otherwise the line width for the <code>stroke</code> action will be scaled as well.</p>
+
+<p><a name="arc-reverse"></a>
+<a name="arc"></a>
+<a name="brush"></a>
+<a name="circle"></a>
+<a name="curve-to"></a>
+<a name="dash-pattern"></a>
+<a name="fill-rule-even-odd"></a>
+<a name="fill-rule-winding"></a>
+<a name="fill-rule"></a>
+<a name="fill"></a>
+<a name="line-cap-butt"></a>
+<a name="line-cap-round"></a>
+<a name="line-cap-square"></a>
+<a name="line-to"></a>
+<a name="line-width"></a>
+<a name="move-to"></a>
+<a name="paint"></a>
+<a name="rectangle"></a>
+<a name="reset"></a>
+<a name="restore"></a>
+<a name="rotate"></a>
+<a name="rounded-rectangle"></a>
+<a name="save"></a>
+<a name="scale"></a>
+<a name="stroke"></a>
+<a name="translate"></a>
+<a name="triangle"></a></p>
 
 <h2>Reference (missing)</h2>
 

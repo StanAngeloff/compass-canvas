@@ -321,7 +321,17 @@ body {
   text-align: center;
 }
 
+/* line 42, default.scss */
+h1 {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+}
+
 /* line 43, default.scss */
+h2 {
+  border-bottom: 1px dotted rgba(0, 0, 0, 0.25);
+}
+
+/* line 45, default.scss */
 #main {
   background: #fff;
   margin: 0 auto;
@@ -334,7 +344,7 @@ body {
   box-shadow: rgba(0, 0, 0, 0.25) 0 0 20px;
 }
 
-/* line 52, default.scss */
+/* line 54, default.scss */
 pre {
   padding: 1.4em;
   background: rgba(128, 128, 255, 0.05);
@@ -349,7 +359,7 @@ pre {
   -o-box-shadow: rgba(0, 0, 0, 0.25) 0 0 10px inset;
   box-shadow: rgba(0, 0, 0, 0.25) 0 0 10px inset;
 }
-/* line 58, default.scss */
+/* line 60, default.scss */
 pre code {
   padding: 0;
   background: transparent;
@@ -359,7 +369,7 @@ pre code {
   box-shadow: none;
 }
 
-/* line 65, default.scss */
+/* line 67, default.scss */
 code {
   padding: 0.15em 0.7em;
   background: rgba(128, 128, 255, 0.1);
