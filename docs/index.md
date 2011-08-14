@@ -740,7 +740,7 @@ For more information on Cairo, visit [The Cairo graphics tutorial][cairo-tutoria
 
 For a complete reference on Cairo methods, visit [Pycairo documentation][pycairo].
 
-  [rdoc]:           rdoc/frames.html
+  [rdoc]:           http://rubydoc.info/gems/compass-canvas/frames
   [cairo-tutorial]: http://zetcode.com/tutorials/cairographicstutorial/
   [pycairo]:        http://cairographics.org/documentation/pycairo/3/reference/context.html#class-context
 
