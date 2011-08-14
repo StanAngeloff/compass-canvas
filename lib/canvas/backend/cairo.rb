@@ -98,6 +98,21 @@ module Compass::Canvas::Backend
         @context.rotate(*args)
       when :transform
         @context.transform(::Cairo::Matrix.new(*args))
+      when :mask
+        if args[0].is_a?(Compass::Canvas::Backend::Cairo)
+          surface = args.shift.execute.surface
+          if args.length == 1
+            pattern = ::Cairo::SurfacePattern.new(surface)
+            pattern.set_extend(::Cairo::const_get("EXTEND_#{ args[0].upcase }"))
+            @context.mask(pattern)
+          else
+            x = args.shift if args.length
+            y = args.shift if args.length
+            @context.mask(surface, x || 0, y || 0)
+          end
+        else
+          raise Compass::Canvas::Exception.new("(#{self.class}.#{action}) Unsupported canvas, Cairo can only mask with Cairo: #{args.inspect}")
+        end
       when :brush
         case args[0]
         when :solid
