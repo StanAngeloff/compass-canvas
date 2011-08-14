@@ -1,0 +1,70 @@
+// --------------------------------------------------------------------------
+// SETUP
+// --------------------------------------------------------------------------
+
+@import 'compass';
+@import 'blueprint';
+
+@include global-reset;
+
+$base-font-size:      14px;
+$base-line-height:    $base-font-size * 1.4;
+$base-font-family:    'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Sans', 'Lucida Grande', Verdana, Helvetica, Arial, sans-serif;
+$heading-font-family: Garamond, Georgia, 'Palatino Linotype', Palatino, 'Book Antiqua', 'Times New Roman', times, serif;
+
+$blueprint-font-family: $base-font-family;
+$blueprint-font-size:   $base-font-size;
+
+@include establish-baseline;
+
+body { font-family: $base-font-family; }
+
+$link-color:         #369;
+
+$link-hover-color:   darken($link-color, 25%);
+$link-active-color:  darken($link-color, 30%);
+$link-visited-color: lighten($link-color, 10%);
+$link-focus-color:   $link-active-color;
+
+@include blueprint-typography();
+
+h1, h2, h3, h4, h5, h6 { font-family: $heading-font-family; }
+
+// --------------------------------------------------------------------------
+// DEFAULT STYLES
+// --------------------------------------------------------------------------
+
+body {
+  background: rgba(0, 0, 0, 0.25);
+
+  text-align: center;
+}
+
+#main {
+  background: #fff;
+  margin: 0 auto;
+  text-align: left;
+  padding: rhythm($lines: 1);
+  max-width: 60em;
+  @include box-shadow(rgba(0, 0, 0, 0.25) 0 0 20px);
+}
+
+pre {
+  padding: rhythm();
+  background: rgba(128, 128, 255, 0.05);
+  @include border-radius(5px);
+  @include box-shadow(rgba(0, 0, 0, 0.25) 0 0 10px inset);
+
+  code {
+    padding: 0;
+    background: transparent;
+    @include box-shadow(none);
+  }
+}
+
+code {
+  padding: 0.15em rhythm() / 2;
+  background: rgba(128, 128, 255, 0.1);
+  @include border-radius(4px);
+  @include box-shadow(rgba(0, 0, 0, 0.25) 0 0 2px inset);
+}

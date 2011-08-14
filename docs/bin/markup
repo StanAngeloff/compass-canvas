@@ -54,7 +54,9 @@ puts <<-EOD
 </head>
 <body>
 
+<article id=main>
 #{ source }
+</article>
 
 </body>
 </html>
