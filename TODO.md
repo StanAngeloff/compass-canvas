@@ -1,0 +1,2 @@
+- List of all actions in docs (REFERENCE)
+- Add support for cairo_set_operator (see http://zetcode.com/tutorials/cairographicstutorial/compositing/)
