@@ -13,21 +13,21 @@ module Compass::Canvas
       #
       # This function cannot be created in Sass as it is a variadic function.
       def brush(*args)
-        canvas_pattern(Sass::Script::String.new('brush'), *args)
+        canvas_pattern(Sass::Script::String.new(Compass::Canvas::Actions::BRUSH), *args)
       end
 
       # Constructs a dash pattern array from positive On/Off lengths.
       #
       # This function cannot be created in Sass as it is a variadic function.
       def dash_pattern(*args)
-        canvas_pattern(Sass::Script::String.new('dash_pattern'), *args)
+        canvas_pattern(Sass::Script::String.new(Compass::Canvas::Actions::DASH_PATTERN), *args)
       end
 
       # Constructs a mask from a canvas.
       #
       # This function cannot be created in Sass as it is a variadic function.
       def mask(*args)
-        canvas_pattern(Sass::Script::String.new('mask'), *args)
+        canvas_pattern(Sass::Script::String.new(Compass::Canvas::Actions::MASK), *args)
       end
     end
   end

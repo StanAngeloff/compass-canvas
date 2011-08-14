@@ -1,2 +1,1 @@
 - Add support for writing images to disk
-- Blur/Drop Shadow?

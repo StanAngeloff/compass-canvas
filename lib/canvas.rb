@@ -33,6 +33,7 @@ module Compass::Canvas
 end
 
 require 'canvas/actions'
+require 'canvas/constants'
 require 'canvas/backend'
 require 'canvas/configuration'
 require 'canvas/plugins'

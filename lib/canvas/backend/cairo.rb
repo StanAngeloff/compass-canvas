@@ -119,7 +119,7 @@ module Compass::Canvas::Backend
             y = args.shift if args.length
             @context.mask(surface, x || 0, y || 0)
           end
-        elsif type == :retrieve
+        elsif type == Compass::Canvas::Actions::RETRIEVE
           @context.mask(@sources.pop)
         else
           raise Compass::Canvas::Exception.new("(#{self.class}.#{action}) Unsupported canvas, Cairo can only mask with Cairo: #{type.inspect}")
@@ -127,16 +127,16 @@ module Compass::Canvas::Backend
       when Compass::Canvas::Actions::BRUSH
         type = args.shift
         case type
-        when :solid
+        when Compass::Canvas::Constants::SOLID
           components = args.shift
           @context.set_source_rgba(*components)
-        when :linear, :radial
+        when Compass::Canvas::Constants::LINEAR, Compass::Canvas::Constants::RADIAL
           coordinates = args.shift
           stops       = args.shift
           gradient    = ::Cairo::const_get("#{ type.to_s.sub(/^\w/) { |s| s.capitalize } }Pattern").new(*coordinates)
           stops.each { |value| gradient.add_color_stop_rgba(*value) }
           @context.set_source(gradient)
-        when :canvas
+        when Compass::Canvas::Constants::CANVAS
           canvas = args.shift
           if canvas.is_a?(Compass::Canvas::Backend::Cairo)
             pattern = ::Cairo::SurfacePattern.new(canvas.execute.surface)

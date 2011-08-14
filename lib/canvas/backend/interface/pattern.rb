@@ -6,11 +6,11 @@ module Compass::Canvas::Backend::Interface
       if args.length == 1
         type = args.shift
         if type.is_a?(Sass::Script::Color)
-          [:solid, Pattern.split(type)]
-        elsif type.is_a?(Sass::Script::String) && type.value == 'retrieve'
-          [:retrieve]
+          [Compass::Canvas::Constants::SOLID, Pattern.split(type)]
+        elsif type.is_a?(Sass::Script::String) && type.value == Compass::Canvas::Actions::RETRIEVE.to_s
+          [Compass::Canvas::Actions::RETRIEVE]
         elsif type.is_a?(Compass::Canvas::Backend::Base)
-          [:canvas, type]
+          [Compass::Canvas::Constants::CANVAS, type]
         else
           raise Compass::Canvas::Exception.new("(#{self.class}.#{@action}) Unsupported solid brush type: #{type.inspect}")
         end
@@ -18,15 +18,15 @@ module Compass::Canvas::Backend::Interface
         canvas  = args.shift
         extends = args.shift
         if canvas.is_a?(Compass::Canvas::Backend::Base) && extends.is_a?(Sass::Script::String)
-          [:canvas, canvas, extends.value]
+          [Compass::Canvas::Constants::CANVAS, canvas, extends.value]
         else
           raise Compass::Canvas::Exception.new("(#{self.class}.#{@action}) Unsupported pattern brush type: #{canvas.inspect}")
         end
       elsif args.length > 4
         index = 0
         index = index + 1 while index < args.length && args[index].is_a?(Sass::Script::Number)
-        type = :linear if index == 4
-        type = :radia  if index == 6
+        type = Compass::Canvas::Constants::LINEAR if index == 4
+        type = Compass::Canvas::Constants::RADIAL if index == 6
         if type
           [type, args.slice(0, index).map { |value| value.value }, Pattern.stops(args.slice(index, args.length))]
         else
@@ -45,8 +45,8 @@ module Compass::Canvas::Backend::Interface
     # Unpacks +canvas+ and optional arguments to a Ruby object.
     def mask(*args)
       type = args.shift
-      if type.is_a?(Sass::Script::String) && type.value == 'retrieve'
-        type = :retrieve
+      if type.is_a?(Sass::Script::String) && type.value == Compass::Canvas::Actions::RETRIEVE.to_s
+        type = Compass::Canvas::Actions::RETRIEVE
       end
       [type].concat(args.map { |value| value.value })
     end

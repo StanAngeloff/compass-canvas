@@ -13,7 +13,7 @@ module Compass::Canvas
       #
       # This function cannot be created in Sass as it is a variadic function.
       def slow_blur(radius, *args)
-        canvas_context(Sass::Script::String.new('slow_blur'), *[radius].concat(args))
+        canvas_context(Sass::Script::String.new(Compass::Canvas::Actions::SLOW_BLUR.to_s), *[radius].concat(args))
       end
     end
   end
