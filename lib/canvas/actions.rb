@@ -23,10 +23,12 @@ module Compass::Canvas
     PUSH         = :push
     RESET        = :reset
     RESTORE      = :restore
+    RETRIEVE     = :retrieve
     ROTATE       = :rotate
     SAVE         = :save
     SCALE        = :scale
     SLOW_BLUR    = :slow_blur
+    STORE        = :store
     STROKE       = :stroke
     TOLERANCE    = :tolerance
     TRANSFORM    = :transform

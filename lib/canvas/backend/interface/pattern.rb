@@ -7,10 +7,12 @@ module Compass::Canvas::Backend::Interface
         type = args.shift
         if type.is_a?(Sass::Script::Color)
           [:solid, Pattern.split(type)]
+        elsif type.is_a?(Sass::Script::String) && type.value == 'retrieve'
+          [:retrieve]
         elsif type.is_a?(Compass::Canvas::Backend::Base)
           [:canvas, type]
         else
-          raise Compass::Canvas::Exception.new("(#{self.class}.#{@action}) Unsupported solid brush type: #{args.inspect}")
+          raise Compass::Canvas::Exception.new("(#{self.class}.#{@action}) Unsupported solid brush type: #{type.inspect}")
         end
       elsif args.length == 2
         canvas  = args.shift
@@ -18,7 +20,7 @@ module Compass::Canvas::Backend::Interface
         if canvas.is_a?(Compass::Canvas::Backend::Base) && extends.is_a?(Sass::Script::String)
           [:canvas, canvas, extends.value]
         else
-          raise Compass::Canvas::Exception.new("(#{self.class}.#{@action}) Unsupported pattern brush type: #{args.inspect}")
+          raise Compass::Canvas::Exception.new("(#{self.class}.#{@action}) Unsupported pattern brush type: #{canvas.inspect}")
         end
       elsif args.length > 4
         index = 0
@@ -42,8 +44,11 @@ module Compass::Canvas::Backend::Interface
 
     # Unpacks +canvas+ and optional arguments to a Ruby object.
     def mask(*args)
-      canvas = args.shift
-      [canvas].concat(args.map { |value| value.value })
+      type = args.shift
+      if type.is_a?(Sass::Script::String) && type.value == 'retrieve'
+        type = :retrieve
+      end
+      [type].concat(args.map { |value| value.value })
     end
 
     private

@@ -34,6 +34,7 @@ module Compass::Canvas::Backend
       end
       @context = ::Cairo::Context.new(@surface)
       @context.set_line_width(1)
+      @sources = []
     end
 
     # Executes a single action on the context bound to the surface.
@@ -59,6 +60,10 @@ module Compass::Canvas::Backend
         @context.push_group
       when Compass::Canvas::Actions::POP
         @context.pop_group_to_source
+      when Compass::Canvas::Actions::STORE
+        @sources.push(@context.source)
+      when Compass::Canvas::Actions::RETRIEVE
+        @context.set_source(@sources.pop)
       when Compass::Canvas::Actions::GROUP
         @context.new_sub_path
       when Compass::Canvas::Actions::CLIP
@@ -102,8 +107,9 @@ module Compass::Canvas::Backend
       when Compass::Canvas::Actions::TRANSFORM
         @context.transform(::Cairo::Matrix.new(*args))
       when Compass::Canvas::Actions::MASK
-        if args[0].is_a?(Compass::Canvas::Backend::Cairo)
-          surface = args.shift.execute.surface
+        type = args.shift
+        if type.is_a?(Compass::Canvas::Backend::Cairo)
+          surface = type.execute.surface
           if args.length == 1
             pattern = ::Cairo::SurfacePattern.new(surface)
             pattern.set_extend(constant('EXTEND', args))
@@ -113,8 +119,10 @@ module Compass::Canvas::Backend
             y = args.shift if args.length
             @context.mask(surface, x || 0, y || 0)
           end
+        elsif type == :retrieve
+          @context.mask(@sources.pop)
         else
-          raise Compass::Canvas::Exception.new("(#{self.class}.#{action}) Unsupported canvas, Cairo can only mask with Cairo: #{args.inspect}")
+          raise Compass::Canvas::Exception.new("(#{self.class}.#{action}) Unsupported canvas, Cairo can only mask with Cairo: #{type.inspect}")
         end
       when Compass::Canvas::Actions::BRUSH
         type = args.shift
@@ -135,10 +143,10 @@ module Compass::Canvas::Backend
             pattern.set_extend(constant('EXTEND', args)) if args.length
             @context.set_source(pattern)
           else
-            raise Compass::Canvas::Exception.new("(#{self.class}.#{action}) Unsupported canvas, Cairo can only paint with Cairo: #{args.inspect}")
+            raise Compass::Canvas::Exception.new("(#{self.class}.#{action}) Unsupported canvas, Cairo can only paint with Cairo: #{canvas.inspect}")
           end
         else
-          raise Compass::Canvas::Exception.new("(#{self.class}.#{action}) Unsupported type (supported types are 'solid', 'linear', 'radial'): #{args.inspect}")
+          raise Compass::Canvas::Exception.new("(#{self.class}.#{action}) Unsupported type (supported types are 'solid', 'linear', 'radial'): #{type.inspect}")
         end
       when Compass::Canvas::Actions::SLOW_BLUR
         radius = args.shift
