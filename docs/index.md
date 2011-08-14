@@ -734,10 +734,13 @@ Note the `fill` and `stroke` actions are placed after the `restore` action other
 Reference (missing)
 -------------------
 
+[RDoc is available][rdoc] for the entire project.
+
 For more information on Cairo, visit [The Cairo graphics tutorial][cairo-tutorial].
 
 For a complete reference on Cairo methods, visit [Pycairo documentation][pycairo].
 
+  [rdoc]:           rdoc/frames.html
   [cairo-tutorial]: http://zetcode.com/tutorials/cairographicstutorial/
   [pycairo]:        http://cairographics.org/documentation/pycairo/3/reference/context.html#class-context
 
