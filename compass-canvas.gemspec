@@ -17,4 +17,5 @@ Gem::Specification.new do |s|
   s.files  = ['README.md', 'LICENSE.md']
   s.files += Dir.glob('lib/**/*.*')
   s.files += Dir.glob('stylesheets/**/*.*')
+  s.files += Dir.glob('plugins/**/*.*')
 end

@@ -20,6 +20,14 @@ module Compass::Canvas
     File.expand_path(File.join(File.dirname(__FILE__), '..', directory))
   end
 
+  # Locations where plug-ins are installed. These paths are scanned for *.rb files
+  # and loaded in order.
+  PLUGINS_PATH = [
+    Compass::Canvas.path_to('plugins'),
+    File.join(ENV['HOME'], '.compass-canvas', 'plugins'),
+    File.join(Dir.getwd, 'plugins')
+  ]
+
   # Default exception class.
   class Exception < ::StandardError; end
 end
@@ -27,6 +35,7 @@ end
 require 'canvas/actions'
 require 'canvas/backend'
 require 'canvas/configuration'
+require 'canvas/plugins'
 require 'canvas/functions'
 
 # Register Canvas as a Compass framework.
