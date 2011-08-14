@@ -1,0 +1,44 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'
+require 'rubygems'
+require 'markdown'
+
+__DIR = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+
+Dir.glob(File.join(__DIR, 'assets/**', '*.png')).each do |image|
+  File.unlink(image)
+end
+
+source = File.read(ARGV[0] || File.join(__DIR, 'index.md'))
+index  = 1
+
+source = source.gsub(/```(.*?)```/m) do |group|
+  group = group.gsub(/```\s+|\s+```/, '').chomp
+  local = group
+  if group.match(/\n\/\//)
+    group = group.gsub(/\n*(\n\/\/.*)+/) do |comments|
+      local = comments.gsub(/^\/\//, '').chomp
+      ''
+    end
+  end
+  local = local.gsub(/\bcanvas\(/, "canvas('example.png', ")
+  File.open(File.join(__DIR, 'assets', 'example.scss'), 'wb') { |io| io << local }
+  system("compass compile #{ File.join(__DIR, 'assets') } --force 1>/dev/null 2>&1")
+  result = File.join(__DIR, 'assets', 'images', 'example.png')
+  padd   = '    ';
+  group  = padd + group.split("\n").join("\n#{padd}")
+  if File.exists?(result)
+    FileUtils.mv(result, File.join(__DIR, 'assets', 'images', "example-#{index}.png"))
+    group = "<!-- div class='example' -->\n" + group + "\n![Example #{index}](assets/images/example-#{index}.png)" + "\n\n<!-- /div -->"
+    index = index + 1
+  end
+  group
+end
+
+File.open(File.join(__DIR, 'assets', 'example.scss'), 'wb') { |io| io << '' }
+if File.exists?(File.join(__DIR, 'assets', 'example.css'))
+  File.unlink(File.join(__DIR, 'assets', 'example.css'))
+end
+
+puts Markdown.new(source).to_html
