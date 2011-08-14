@@ -106,16 +106,6 @@ module Compass::Canvas::Backend
       self
     end
 
-    def unpack(value)
-      if value.is_a?(Compass::Canvas::Backend::Interface::Base)
-        value
-      elsif value.is_a?(Sass::Script::Literal)
-        unpack(value.value)
-      elsif value.is_a?(Array)
-        value.map { |child| unpack(child) }
-      else
-        value
-      end
     end
 
     private
