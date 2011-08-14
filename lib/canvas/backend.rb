@@ -15,7 +15,7 @@ module Compass::Canvas::Backend
     attr_accessor :width
     # @return [Fixnum] The height of the canvas, in pixels.
     attr_accessor :height
-    # @return [String] The external file where the Canvas will be read/written in a PNG format.
+    # @return [String] The external file where the backend will be loaded/saved in a PNG format.
     attr_accessor :file
 
     # Initializes a new instance of a backend class.
@@ -24,19 +24,27 @@ module Compass::Canvas::Backend
     #   @param [Fixnum] width The width of the canvas, in pixels.
     #   @param [Fixnum] height The height of the canvas, in pixels.
     #   @param [Array<Object>] actions The actions to execute.
+    # @overload initialize(file, width, height, *actions)
+    #   @param [String] file The file where the backend will be saved in a PNG format.
+    #   @param [Fixnum] width The width of the canvas, in pixels.
+    #   @param [Fixnum] height The height of the canvas, in pixels.
+    #   @param [Array<Object>] actions The actions to execute.
     # @overload initialize(file)
     #   @param [String] file An external file to read.
     def initialize(*args)
       load_dependencies
-      if (args.length == 1)
+      if args[0].is_a?(String)
         file = args.shift
-        if file.include?('url(')
-          file = File.join(Compass.configuration.css_path, file.gsub(/^url\(['"]?|["']?\)$/, '').split('?').shift())
-        else
-          file = File.join(Compass.configuration.images_path, file.split('?').shift())
+        unless args[1].is_a?(Fixnum)
+          if file.include?('url(')
+            file = File.join(Compass.configuration.css_path, file.gsub(/^url\(['"]?|["']?\)$/, '').split('?').shift())
+          else
+            file = File.join(Compass.configuration.images_path, file.split('?').shift())
+          end
         end
         @file = file
-      else
+      end
+      if args[0].is_a?(Fixnum)
         @width  = args.shift
         @height = args.shift
       end
@@ -85,10 +93,25 @@ module Compass::Canvas::Backend
       execute_actions
     end
 
-    # Serializes the canvas as a Base64 encoded Data URI.
-    def to_s(options = {})
+    # Returns the canvas as a Base64 encoded Data URI or as a file on disk
+    # depending on the configuration.
+    def value
       execute
-      Sass::Script::String.new("url('data:image/png;base64,#{ Base64.encode64(to_blob).gsub("\n", '') }')")
+      if @file
+        extension = '.png'
+        filename  = @file.chomp(extension) + extension
+        path      = File.join(Compass.configuration.images_path, filename)
+        FileUtils.mkpath(File.dirname(path))
+        File.open(path, 'wb') { |io| io << to_blob }
+        filename
+      else
+        "url('data:image/png;base64,#{ Base64.encode64(to_blob).gsub("\n", '') }')"
+      end
+    end
+
+    # Serializes the canvas as a Sass type
+    def to_s(options = {})
+      Sass::Script::String.new(value)
     end
 
     protected

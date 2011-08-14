@@ -7,7 +7,7 @@ module Compass::Canvas
   # The project and Gem version. When building a Gem file for release, the
   # version is stripped to X.Y.Z. If you are using a Git cloned-repository,
   # the version will end in +.git+.
-  VERSION = '0.0.2.git'
+  VERSION = '0.0.3.git'
 
   # The default backend for drawing.
   BACKEND = 'cairo'

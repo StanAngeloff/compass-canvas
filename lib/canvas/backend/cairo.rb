@@ -27,10 +27,10 @@ module Compass::Canvas::Backend
 
     # Creates a new +ImageSurface+ and binds a new context to it.
     def begin_canvas
-      if @file
-        @surface = ::Cairo::ImageSurface.from_png(@file)
-      else
+      if @width && @height
         @surface = ::Cairo::ImageSurface.new(::Cairo::FORMAT_ARGB32, @width, @height)
+      else
+        @surface = ::Cairo::ImageSurface.from_png(@file)
       end
       @context = ::Cairo::Context.new(@surface)
       @context.set_line_width(1)
