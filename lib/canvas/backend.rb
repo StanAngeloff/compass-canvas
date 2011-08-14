@@ -7,7 +7,7 @@ module Compass::Canvas::Backend
   # Each implementation must respond to four methods:
   # - {Compass::Canvas::Backend::Base::load_dependencies} - initializes the backend by loading third-party dependencies
   # - {Compass::Canvas::Backend::Base::begin_canvas} - initialization code before the canvas is drawn
-  # - {Compass::Canvas::Backend::Base::execute_action} - executes a single action on the canvas
+  # - {Compass::Canvas::Backend::Base::execute_one} - executes a single action on the canvas
   # - {Compass::Canvas::Backend::Base::to_blob} - clean up code, must return a
   #   +String+ representation of the canvas in a PNG format
   class Base < Sass::Script::Literal
@@ -66,7 +66,7 @@ module Compass::Canvas::Backend
     # Executes a single action on the canvas.
     #
     # @raise [Compass::Canvas::Exception] Backend implementation must override this method.
-    def execute_action(action, *args)
+    def execute_one(action, *args)
       raise Compass::Canvas::Exception.new("(#{self.class}) Class must implement '#{this_method}'.")
     end
 
@@ -82,7 +82,20 @@ module Compass::Canvas::Backend
     # Creates an empty canvas and executes all stored actions.
     def execute
       begin_canvas
-      @actions.each do |child|
+      execute_actions
+    end
+
+    # Serializes the canvas as a Base64 encoded Data URI.
+    def to_s(options = {})
+      execute
+      Sass::Script::String.new("url('data:image/png;base64,#{ Base64.encode64(to_blob).gsub("\n", '') }')")
+    end
+
+    protected
+
+    def execute_actions(actions = nil)
+      actions ||= @actions
+      actions.each do |child|
         if child.is_a?(Compass::Canvas::Backend::Interface::Base)
           action = child.action
           args   = child.args
@@ -92,15 +105,9 @@ module Compass::Canvas::Backend
         else
           raise Compass::Canvas::Exception.new("(#{self.class}) Unsupported action: #{child.inspect}")
         end
-        execute_action(action, *args)
+        execute_one(action, *args)
       end
       self
-    end
-
-    # Serializes the canvas as a Base64 encoded Data URI.
-    def to_s(options = {})
-      execute
-      Sass::Script::String.new("url('data:image/png;base64,#{ Base64.encode64(to_blob).gsub("\n", '') }')")
     end
 
     private

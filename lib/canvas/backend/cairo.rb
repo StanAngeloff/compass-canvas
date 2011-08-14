@@ -37,7 +37,7 @@ module Compass::Canvas::Backend
     end
 
     # Executes a single action on the context bound to the surface.
-    def execute_action(action, *args)
+    def execute_one(action, *args)
       case action
       when Compass::Canvas::Actions::MOVE
         @context.move_to(*args)
@@ -139,6 +139,11 @@ module Compass::Canvas::Backend
           end
         else
           raise Compass::Canvas::Exception.new("(#{self.class}.#{action}) Unsupported type (supported types are 'solid', 'linear', 'radial'): #{args.inspect}")
+        end
+      when Compass::Canvas::Actions::SLOW_BLUR
+        radius = args.shift
+        @context.pseudo_blur(radius) do
+          execute_actions(args)
         end
       else
         raise Compass::Canvas::Exception.new("(#{self.class}) '#{action}' is not supported.")

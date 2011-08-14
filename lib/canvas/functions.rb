@@ -15,6 +15,18 @@ module Compass::Canvas
     include Context
     include Path
     include Pattern
+
+    def self.unpack(value)
+      if value.is_a?(Compass::Canvas::Backend::Interface::Base)
+        value
+      elsif value.is_a?(Sass::Script::Literal)
+        Compass::Canvas::Functions.unpack(value.value)
+      elsif value.is_a?(Array)
+        value.map { |child| Compass::Canvas::Functions.unpack(child) }
+      else
+        value
+      end
+    end
   end
 end
 

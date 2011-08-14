@@ -59,5 +59,10 @@ module Compass::Canvas::Backend::Interface
     def transform(xx, yx, xy, yy, x0, y0)
       [xx.value, yx.value, xy.value, yy.value, x0.value, y0.value]
     end
+
+    def slow_blur(*args)
+      radius = args.shift.value
+      [radius].concat(Compass::Canvas::Functions.unpack(args).flatten)
+    end
   end
 end

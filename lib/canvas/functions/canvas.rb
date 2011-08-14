@@ -14,21 +14,7 @@ module Compass::Canvas
         rescue NameError
           raise Compass::Canvas::Exception.new("(Compass::Canvas) '#{backend}' backend is not installed.")
         end
-        klass.new(*unpack(args).flatten)
-      end
-
-      protected
-
-      def unpack(value)
-        if value.is_a?(Compass::Canvas::Backend::Interface::Base)
-          value
-        elsif value.is_a?(Sass::Script::Literal)
-          unpack(value.value)
-        elsif value.is_a?(Array)
-          value.map { |child| unpack(child) }
-        else
-          value
-        end
+        klass.new(*Compass::Canvas::Functions.unpack(args).flatten)
       end
     end
   end

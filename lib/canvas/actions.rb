@@ -26,6 +26,7 @@ module Compass::Canvas
     ROTATE       = :rotate
     SAVE         = :save
     SCALE        = :scale
+    SLOW_BLUR    = :slow_blur
     STROKE       = :stroke
     TOLERANCE    = :tolerance
     TRANSFORM    = :transform
