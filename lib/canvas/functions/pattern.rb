@@ -18,6 +18,11 @@ module Compass::Canvas
       def dash_pattern(*args)
         canvas_pattern(Sass::Script::String.new('dash_pattern'), *args)
       end
+
+      # Constructs a mask from a canvas.
+      def mask(*args)
+        canvas_pattern(Sass::Script::String.new('mask'), *args)
+      end
     end
   end
 end

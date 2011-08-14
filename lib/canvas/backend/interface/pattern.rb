@@ -41,6 +41,11 @@ module Compass::Canvas::Backend::Interface
       pattern.map { |value| value.value }
     end
 
+    # Unpacks +canvas+ and optional arguments to a Ruby object.
+    def mask(*args)
+      [args.shift].concat(args.map { |value| value.value })
+    end
+
     private
 
     def self.split_color(value)
