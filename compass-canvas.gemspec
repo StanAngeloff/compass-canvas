@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
 
   s.authors  = ['Stan Angeloff']
   s.email    = ['stanimir@angeloff.name']
-  s.homepage = 'https://github.com/StanAngeloff/compass-canvas'
+  s.homepage = 'http://StanAngeloff.github.com/compass-canvas/'
 
   s.require_paths = ['lib']
 
