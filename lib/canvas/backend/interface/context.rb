@@ -1,27 +1,27 @@
 module Compass::Canvas::Backend::Interface
   # Interface Context class.
   class Context < Base
-    # Unpacks argument +width+ from Sass to Ruby objects.
+    # Unpacks argument +width+ from Sass to a Ruby object.
     def line_width(width)
       [width.value]
     end
 
-    # Unpacks argument +type+ from Sass to Ruby objects.
+    # Unpacks argument +type+ from Sass to a Ruby object.
     def line_cap(type)
       [type.value]
     end
 
-    # Unpacks argument +type+ from Sass to Ruby objects.
+    # Unpacks argument +type+ from Sass to a Ruby object.
     def line_join(type)
       [type.value]
     end
 
-    # Unpacks argument +limit+ from Sass to Ruby objects.
+    # Unpacks argument +limit+ from Sass to a Ruby object.
     def miter_limit(limit)
       [limit.value]
     end
 
-    # Unpacks argument +type+ from Sass to Ruby objects.
+    # Unpacks argument +type+ from Sass to a Ruby object.
     def antialias(type)
       if type.is_a?(Sass::Script::Color)
         [type.to_s]
@@ -30,12 +30,12 @@ module Compass::Canvas::Backend::Interface
       end
     end
 
-    # Unpacks argument +type+ from Sass to Ruby objects.
+    # Unpacks argument +type+ from Sass to a Ruby object.
     def fill_rule(type)
       [type.value]
     end
 
-    # Unpacks argument +level+ from Sass to Ruby objects.
+    # Unpacks argument +level+ from Sass to a Ruby object.
     def tolerance(level)
       [level.value]
     end
@@ -50,7 +50,7 @@ module Compass::Canvas::Backend::Interface
       [x.value, y.value]
     end
 
-    # Unpacks argument +angle+ from Sass to Ruby objects.
+    # Unpacks argument +angle+ from Sass to a Ruby object.
     def rotate(angle)
       [angle.value * (Math::PI / 180.0)]
     end

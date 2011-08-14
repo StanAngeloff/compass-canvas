@@ -3,6 +3,7 @@ require 'stringio'
 module Compass::Canvas::Backend
   # Cairo backend implementation.
   class Cairo < Base
+    # @return [::Cairo::ImageSurface] The internal image surface.
     attr_accessor :surface
 
     # Loads the +cairo+ gem dependency. If it is not on +$LOAD_PATH+, attempts
@@ -38,72 +39,74 @@ module Compass::Canvas::Backend
     # Executes a single action on the context bound to the surface.
     def execute_action(action, *args)
       case action
-      when :move
+      when Compass::Canvas::Actions::MOVE
         @context.move_to(*args)
-      when :line
+      when Compass::Canvas::Actions::LINE
         @context.line_to(*args)
-      when :curve
+      when Compass::Canvas::Actions::CURVE
         @context.curve_to(*args)
-      when :arc
+      when Compass::Canvas::Actions::ARC
         @context.arc(*args)
-      when :paint
+      when Compass::Canvas::Actions::PAINT
         @context.paint(*args)
-      when :stroke
+      when Compass::Canvas::Actions::STROKE
         @context.stroke_preserve(*args)
-      when :fill
+      when Compass::Canvas::Actions::FILL
         @context.fill_preserve(*args)
-      when :line_width
+      when Compass::Canvas::Actions::LINE_WIDTH
         @context.set_line_width(*args)
-      when :push
+      when Compass::Canvas::Actions::PUSH
         @context.push_group
-      when :pop
+      when Compass::Canvas::Actions::POP
         @context.pop_group_to_source
-      when :group
+      when Compass::Canvas::Actions::GROUP
         @context.new_sub_path
-      when :clip
+      when Compass::Canvas::Actions::CLIP
         @context.clip_preserve
-      when :unclip
+      when Compass::Canvas::Actions::UNCLIP
         @context.reset_clip
-      when :close
+      when Compass::Canvas::Actions::CLOSE
         @context.close_path
-      when :reset
+      when Compass::Canvas::Actions::RESET
         @context.new_path
-      when :save
+      when Compass::Canvas::Actions::SAVE
         @context.save
-      when :restore
+      when Compass::Canvas::Actions::RESTORE
         @context.restore
-      when :antialias
-        @context.set_antialias(::Cairo::const_get("ANTIALIAS_#{ args[0].upcase }"))
-      when :fill_rule
-        @context.set_fill_rule(::Cairo::const_get("FILL_RULE_#{ args[0].gsub('-', '_').upcase }"))
-      when :tolerance
+      when Compass::Canvas::Actions::ANTIALIAS
+        @context.set_antialias(constant('ANTIALIAS', args))
+      when Compass::Canvas::Actions::FILL_RULE
+        @context.set_fill_rule(constant('FILL_RULE', args))
+      when Compass::Canvas::Actions::TOLERANCE
         @context.set_tolerance(*args)
-      when :line_cap
-        @context.set_line_cap(::Cairo::const_get("LINE_CAP_#{ args[0].gsub('-', '_').upcase }"))
-      when :line_join
-        @context.set_line_join(::Cairo::const_get("LINE_JOIN_#{ args[0].gsub('-', '_').upcase }"))
-      when :miter_limit
+      when Compass::Canvas::Actions::LINE_CAP
+        @context.set_line_cap(constant('LINE_CAP', args))
+      when Compass::Canvas::Actions::LINE_JOIN
+        @context.set_line_join(constant('LINE_JOIN', args))
+      when Compass::Canvas::Actions::MITER_LIMIT
         @context.set_miter_limit(*args)
-      when :dash_pattern
+      when Compass::Canvas::Actions::DASH_PATTERN
+        # If at least two lengths exist, create a new pattern
         if args.length > 1
           @context.set_dash(args)
+        # Otherwise return to a solid stroke
         else
           @context.set_dash(nil, 0)
         end
-      when :translate
+      when Compass::Canvas::Actions::TRANSLATE
         @context.translate(*args)
-      when :scale
+      when Compass::Canvas::Actions::SCALE
         @context.scale(*args)
-      when :rotate
+      when Compass::Canvas::Actions::ROTATE
         @context.rotate(*args)
-      when :transform
+      when Compass::Canvas::Actions::TRANSFORM
         @context.transform(::Cairo::Matrix.new(*args))
-      when :mask
+      when Compass::Canvas::Actions::MASK
         if args[0].is_a?(Compass::Canvas::Backend::Cairo)
           surface = args.shift.execute.surface
           if args.length == 1
             pattern = ::Cairo::SurfacePattern.new(surface)
-            pattern.set_extend(::Cairo::const_get("EXTEND_#{ args[0].upcase }"))
+            pattern.set_extend(constant('EXTEND', args))
             @context.mask(pattern)
           else
             x = args.shift if args.length
@@ -113,20 +116,23 @@ module Compass::Canvas::Backend
         else
           raise Compass::Canvas::Exception.new("(#{self.class}.#{action}) Unsupported canvas, Cairo can only mask with Cairo: #{args.inspect}")
         end
-      when :brush
-        case args[0]
+      when Compass::Canvas::Actions::BRUSH
+        type = args.shift
+        case type
         when :solid
-          @context.set_source_rgba(*args[1])
+          components = args.shift
+          @context.set_source_rgba(*components)
         when :linear, :radial
-          gradient = ::Cairo::const_get("#{ args[0].to_s.sub(/^\w/) { |s| s.capitalize } }Pattern").new(*args[1])
-          args[2].each { |value| gradient.add_color_stop_rgba(*value) }
+          coordinates = args.shift
+          stops       = args.shift
+          gradient    = ::Cairo::const_get("#{ type.to_s.sub(/^\w/) { |s| s.capitalize } }Pattern").new(*coordinates)
+          stops.each { |value| gradient.add_color_stop_rgba(*value) }
           @context.set_source(gradient)
         when :canvas
-          if args[1].is_a?(Compass::Canvas::Backend::Cairo)
-            pattern = ::Cairo::SurfacePattern.new(args[1].execute.surface)
-            if args.length > 1
-              pattern.set_extend(::Cairo::const_get("EXTEND_#{ args[2].upcase }"))
-            end
+          canvas = args.shift
+          if canvas.is_a?(Compass::Canvas::Backend::Cairo)
+            pattern = ::Cairo::SurfacePattern.new(canvas.execute.surface)
+            pattern.set_extend(constant('EXTEND', args)) if args.length
             @context.set_source(pattern)
           else
             raise Compass::Canvas::Exception.new("(#{self.class}.#{action}) Unsupported canvas, Cairo can only paint with Cairo: #{args.inspect}")
@@ -144,6 +150,12 @@ module Compass::Canvas::Backend
       stream = StringIO.new
       @surface.write_to_png(stream)
       stream.string
+    end
+
+    private
+
+    def constant(name, *args)
+      ::Cairo::const_get("#{ name.upcase }_#{ args.join('_').gsub('-', '_').upcase }")
     end
   end
 end

@@ -4,6 +4,8 @@ module Compass::Canvas
     module Canvas
       # Creates a new {Compass::Canvas::Backend}.
       #
+      # This function cannot be created in Sass as it is a variadic function.
+      #
       # @return [Compass::Canvas::Backend] A new backend instance.
       def canvas(*args)
         backend = Compass.configuration.canvas_backend.sub(/^\w/) { |s| s.capitalize }

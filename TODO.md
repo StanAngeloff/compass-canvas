@@ -1,3 +1,2 @@
-- Add support for `mask` from another canvas
-- Add support for reading an external image and using it as a pattern
 - Add support for writing images to disk
+- Blur/Drop Shadow?
