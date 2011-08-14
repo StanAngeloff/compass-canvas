@@ -15,6 +15,7 @@ module Compass::Canvas
     include Context
     include Path
     include Pattern
+    include Compass::Canvas::Plugins::Functions
 
     def self.unpack(value)
       if value.is_a?(Compass::Canvas::Backend::Interface::Base)
