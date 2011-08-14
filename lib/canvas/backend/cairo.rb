@@ -48,6 +48,8 @@ module Compass::Canvas::Backend
         @context.curve_to(*args)
       when Compass::Canvas::Actions::ARC
         @context.arc(*args)
+      when Compass::Canvas::Actions::ARC_REVERSE
+        @context.arc_negative(*args)
       when Compass::Canvas::Actions::PAINT
         @context.paint(*args)
       when Compass::Canvas::Actions::STROKE

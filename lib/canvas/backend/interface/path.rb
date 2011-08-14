@@ -20,5 +20,10 @@ module Compass::Canvas::Backend::Interface
     def arc(x, y, radius, angle1, angle2)
       [x.value, y.value, radius.value, angle1.value * (Math::PI / 180.0), angle2.value * (Math::PI / 180.0)]
     end
+
+    # @see {arc}
+    def arc_reverse(*args)
+      arc(*args)
+    end
   end
 end

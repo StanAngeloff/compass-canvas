@@ -3,6 +3,7 @@ module Compass::Canvas
   module Actions
     ANTIALIAS    = :antialias
     ARC          = :arc
+    ARC_REVERSE  = :arc_reverse
     BRUSH        = :brush
     CLIP         = :clip
     CLOSE        = :close

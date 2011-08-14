@@ -10,6 +10,10 @@
   @return canvas-path('arc', $x, $y, $radius, $angle1, $angle2);
 }
 
+@function arc-reverse($x, $y, $radius, $angle1, $angle2) {
+  @return canvas-path('arc_reverse', $x, $y, $radius, $angle1, $angle2);
+}
+
 @function curve-to($x1, $y1, $x2, $y2, $x3, $y3) {
   @return canvas-path('curve', $x1, $y1, $x2, $y2, $x3, $y3);
 }
