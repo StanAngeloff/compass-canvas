@@ -79,16 +79,7 @@ module Compass::Canvas::Backend
       raise Compass::Canvas::Exception.new("(#{self.class}) Class must implement '#{this_method}'.")
     end
 
-    # Serializes the canvas as a Base64 encoded Data URI.
-    def to_s(options = {})
-      execute
-      stream = to_blob
-      blob = Base64.encode64(stream).gsub("\n", '')
-      Sass::Script::String.new("url('data:image/png;base64,#{blob}')")
-    end
-
-    protected
-
+    # Creates an empty canvas and executes all stored actions.
     def execute
       begin_canvas
       @actions.each do |child|
@@ -106,6 +97,10 @@ module Compass::Canvas::Backend
       self
     end
 
+    # Serializes the canvas as a Base64 encoded Data URI.
+    def to_s(options = {})
+      execute
+      Sass::Script::String.new("url('data:image/png;base64,#{ Base64.encode64(to_blob).gsub("\n", '') }')")
     end
 
     private
