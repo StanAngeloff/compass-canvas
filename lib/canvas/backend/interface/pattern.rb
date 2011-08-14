@@ -7,13 +7,13 @@ module Compass::Canvas::Backend::Interface
         if args[0].is_a?(Sass::Script::Color)
           [:solid, Pattern.split_color(args[0])]
         elsif args[0].is_a?(Compass::Canvas::Backend::Base)
-          [:backend, args[0]]
+          [:canvas, args[0]]
         else
           raise Compass::Canvas::Exception.new("(#{self.class}.#{@action}) Unsupported solid brush type: #{args.inspect}")
         end
       elsif args.length == 2
         if args[0].is_a?(Compass::Canvas::Backend::Base) && args[1].is_a?(Sass::Script::String)
-          [:backend, args[0], args[1].value]
+          [:canvas, args[0], args[1].value]
         else
           raise Compass::Canvas::Exception.new("(#{self.class}.#{@action}) Unsupported pattern brush type: #{args.inspect}")
         end

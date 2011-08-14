@@ -102,7 +102,7 @@ module Compass::Canvas::Backend
           gradient = ::Cairo::const_get("#{ args[0].to_s.sub(/^\w/) { |s| s.capitalize } }Pattern").new(*args[1])
           args[2].each { |value| gradient.add_color_stop_rgba(*value) }
           @context.set_source(gradient)
-        when :backend
+        when :canvas
           if args[1].is_a?(Compass::Canvas::Backend::Cairo)
             pattern = ::Cairo::SurfacePattern.new(args[1].execute.surface)
             if args.length > 1
@@ -110,7 +110,7 @@ module Compass::Canvas::Backend
             end
             @context.set_source(pattern)
           else
-            raise Compass::Canvas::Exception.new("(#{self.class}.#{action}) Unsupported backend, Cairo can only paint with Cairo: #{args.inspect}")
+            raise Compass::Canvas::Exception.new("(#{self.class}.#{action}) Unsupported canvas, Cairo can only paint with Cairo: #{args.inspect}")
           end
         else
           raise Compass::Canvas::Exception.new("(#{self.class}.#{action}) Unsupported type (supported types are 'solid', 'linear', 'radial'): #{args.inspect}")
