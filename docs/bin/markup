@@ -41,4 +41,21 @@ if File.exists?(File.join(__DIR, 'assets', 'example.css'))
   File.unlink(File.join(__DIR, 'assets', 'example.css'))
 end
 
-puts Markdown.new(source).to_html
+source = Markdown.new(source).to_html
+source = source.gsub("<!-- div class='example' -->", '<div class="example">');
+source = source.gsub("<!-- /div -->", '</div>');
+
+puts <<-EOD
+<!doctype html>
+<html>
+<head>
+  <title>compass-canvas</title>
+  <link rel=stylesheet href=assets/default.css>
+</head>
+<body>
+
+#{ source }
+
+</body>
+</html>
+EOD
