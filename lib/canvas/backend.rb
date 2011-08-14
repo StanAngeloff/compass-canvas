@@ -15,17 +15,32 @@ module Compass::Canvas::Backend
     attr_accessor :width
     # @return [Fixnum] The height of the canvas, in pixels.
     attr_accessor :height
+    # @return [String] The external file where the Canvas will be read/written in a PNG format.
+    attr_accessor :file
 
     # Initializes a new instance of a backend class.
     #
-    # @param [Fixnum] width The width of the canvas, in pixels.
-    # @param [Fixnum] height The height of the canvas, in pixels.
-    # @param [Array<Object>] actions The actions to execute.
-    def initialize(width, height, *actions)
+    # @overload initialize(width, height, *actions)
+    #   @param [Fixnum] width The width of the canvas, in pixels.
+    #   @param [Fixnum] height The height of the canvas, in pixels.
+    #   @param [Array<Object>] actions The actions to execute.
+    # @overload initialize(file)
+    #   @param [String] file An external file to read.
+    def initialize(*args)
       load_dependencies
-      @width   = width.value
-      @height  = height.value
-      @actions = unpack(actions).flatten
+      if (args.length == 1)
+        file = args.shift
+        if file.include?('url(')
+          file = File.join(Compass.configuration.css_path, file.gsub(/^url\(['"]?|["']?\)$/, '').split('?').shift())
+        else
+          file = File.join(Compass.configuration.images_path, file.split('?').shift())
+        end
+        @file = file
+      else
+        @width  = args.shift
+        @height = args.shift
+      end
+      @actions = args
     end
 
     # Abstract method.
