@@ -73,6 +73,12 @@ For a complete reference on Cairo methods, visit [Pycairo documentation][pycairo
   [cairo-tutorial]: http://zetcode.com/tutorials/cairographicstutorial/
   [pycairo]:        http://cairographics.org/documentation/pycairo/3/reference/context.html#class-context
 
+Similar Projects
+----------------
+
+[compass-magick](https://github.com/StanAngeloff/compass-magick) is a pure Ruby dynamic image generation for Compass using ChunkyPNG/PhantomJS (no dependency on RMagick despite the name).
+If you are looking for a project to generate image gradients or small & simple buttons, go check it out.
+
 ### Copyright
 
 > Copyright (c) 2011 Stan Angeloff. See [LICENSE.md](https://github.com/StanAngeloff/compass-canvas/blob/master/LICENSE.md) for details.
