@@ -19,6 +19,8 @@
 It uses <a href="http://en.wikipedia.org/wiki/Cairo_(graphics)">Cairo</a> as a back-end to perform all graphics operations.
 Canvas supports anti-aliasing, vector graphics, gradients, masks, clipping, complex operations like drop shadow and many more.</p>
 
+<p><a href="http://twitter.com/share" class="twitter-share-button" data-text="Canvas in CSS using Compass/Sass and Cairo" data-count="none" data-via="StanAngeloff">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></p>
+
 <h2>Installation</h2>
 
 <p>Installation is done through <a href="http://rubygems.org/">RubyGems</a>:</p>
@@ -37,9 +39,6 @@ You can usually install these using your OS package manager.</p>
 </code></pre>
 
 <h2>Example</h2>
-
-<div class="example">
-
 
 <pre><code>@import 'canvas';
 
@@ -64,11 +63,6 @@ html {
 }
 </code></pre>
 
-<p><img src="assets/images/example-1.png" alt="Example 1" /></p>
-
-</div>
-
-
 <h2>License</h2>
 
 <p>Canvas is licensed under the MIT License.</p>
@@ -92,20 +86,12 @@ html {
 <p>Every drawing operation is done on a surface. A surface is an area defined by (0, 0) x (width, height).
 Initialising a new canvas creates an empty surface (if you were to save it to disk, it would be completely transparent).</p>
 
-<div class="example">
-
-
 <pre><code>@import 'canvas';
 
 html {
   background: canvas(320, 200);
 }
 </code></pre>
-
-<p><img src="assets/images/example-2.png" alt="Example 2" /></p>
-
-</div>
-
 
 <h3>Paths</h3>
 
@@ -115,9 +101,6 @@ Imagine a rectangle. If you were to take a piece of paper and sketch it, you wou
 The easiest and fastest approach is to pick an edge, put the pen down, move it across to draw one of the lines, then move it in a different direction to draw a second line and so forth until the shape is complete.</p>
 
 <p>Creating paths in Canvas is similar - you pick a starting point, define the shape through a series of motions and close the path. Here is how you would define a rectangle:</p>
-
-<div class="example">
-
 
 <pre><code>@import 'canvas';
 
@@ -132,11 +115,6 @@ html {
 }
 </code></pre>
 
-<p><img src="assets/images/example-3.png" alt="Example 3" /></p>
-
-</div>
-
-
 <p>There is only one path primitive in Canvas - a line. While this may seem strange, lines can be curved as well allowing you to build more complex objects.
 There are five basic functions for describing a path:</p>
 
@@ -149,9 +127,6 @@ There are five basic functions for describing a path:</p>
 
 
 <p>Combining these functions allows you to build complex objects like circles, stars, polygons and many more:</p>
-
-<div class="example">
-
 
 <pre><code>@import 'canvas';
 
@@ -175,20 +150,12 @@ html {
 }
 </code></pre>
 
-<p><img src="assets/images/example-4.png" alt="Example 4" /></p>
-
-</div>
-
-
 <h3>Brushes</h3>
 
 <p>Once you have your basic shapes defined, your next step is to draw them.
 Brushes define how a shape will be drawn on the surface.
 Canvas supports the most common ones - solid colour, linear gradient and radial gradient.
 The only relevant function is <a href="#brush"><code>brush</code></a> which defines and sets the brush for the next drawing operation:</p>
-
-<div class="example">
-
 
 <pre><code>@import 'canvas';
 
@@ -198,11 +165,6 @@ html {
   );
 }
 </code></pre>
-
-<p><img src="assets/images/example-5.png" alt="Example 5" /></p>
-
-</div>
-
 
 <h3>Drawing</h3>
 
@@ -222,9 +184,6 @@ Note <code>paint</code> is not a function, i.e., you don't use parentheses <code
 
 <p>Let's draw the rectangle from earlier:</p>
 
-<div class="example">
-
-
 <pre><code>@import 'canvas';
 
 html {
@@ -243,11 +202,6 @@ html {
   );
 }
 </code></pre>
-
-<p><img src="assets/images/example-6.png" alt="Example 6" /></p>
-
-</div>
-
 
 <h3>Saving to Disk</h3>
 
@@ -286,9 +240,6 @@ html {
 <p>You can define your own as <a href="http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#functions">Sass functions</a>.
 The return result of the function must be a <a href="http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#lists">list</a> of Canvas operations.</p>
 
-<div class="example">
-
-
 <pre><code>@import 'canvas';
 
 @function my-shape($x, $y) {
@@ -309,16 +260,8 @@ html {
 }
 </code></pre>
 
-<p><img src="assets/images/example-7.png" alt="Example 7" /></p>
-
-</div>
-
-
 <p>Initialising a new canvas instance creates a new, empty path. Every Canvas operation (<code>move-to</code>, <code>line-to</code>, etc.) is applied to this default path.
 The following may have a surprising result:</p>
-
-<div class="example">
-
 
 <pre><code>@import 'canvas';
 
@@ -334,16 +277,8 @@ html {
 }
 </code></pre>
 
-<p><img src="assets/images/example-8.png" alt="Example 8" /></p>
-
-</div>
-
-
 <p>In the example above, both rectangles are considered to be part of the same path. The first call to <code>fill</code> therefore draws the first rectangle in red and the second call to <code>fill</code> draws both rectangles in blue.
 To split paths in separate shapes, use the <a href="#reset"><code>reset</code></a> action to start a new path.</p>
-
-<div class="example">
-
 
 <pre><code>@import 'canvas';
 
@@ -360,17 +295,9 @@ html {
 }
 </code></pre>
 
-<p><img src="assets/images/example-9.png" alt="Example 9" /></p>
-
-</div>
-
-
 <h4>Single-pixel-wide Paths</h4>
 
 <p>In many of the examples above, the default line width of 1px is used, however lines may look slightly thicker:</p>
-
-<div class="example">
-
 
 <pre><code>@import 'canvas';
 
@@ -382,11 +309,6 @@ html {
 }
 </code></pre>
 
-<p><img src="assets/images/example-10.png" alt="Example 10" /></p>
-
-</div>
-
-
 <blockquote><p>The reason this happens is easy to explain to someone who believes pixels are little squares. By default, integer coordinates map to the intersections of the pixel squares. So a width-1 horizontal/vertical line is centered on the boundary between pixel rows and extends half way into the pixels on either side.</p>
 
 <p>When some people hear pixels described as little squares it sets their teeth on edge. For them we have this alternate explanation. By default, integer coordinates map to points half way between sample point locations. So a width-1 horizontal/vertical will be centered between two rows of pixel sample points and will contribute equally to the pixels on either side, (assuming a symmetric filter which is always the case when synthesizing images in cairo).</p>
@@ -394,9 +316,6 @@ html {
 <p>[..] If you [..] want to light up a single row of pixels at full intensity, you can do that by adjusting the endpoints by 0.5 in the appropriate direction.</p>
 
 <p><a href="http://cairographics.org/FAQ/#sharp_lines">The Cairo FAQ</a></p></blockquote>
-
-<div class="example">
-
 
 <pre><code>@import 'canvas';
 
@@ -408,11 +327,6 @@ html {
 }
 </code></pre>
 
-<p><img src="assets/images/example-11.png" alt="Example 11" /></p>
-
-</div>
-
-
 <h3>Brushes revised</h3>
 
 <h4>Linear Gradients</h4>
@@ -423,9 +337,6 @@ A horizontal gradient therefore can be defined by (0, 0), (100, 0), i.e., <code>
 A diagonal gradient is defined by two points where <code>x1</code> &lt;> <code>x2</code> and <code>y1</code> &lt;> <code>y2</code>.</p>
 
 <p>Linear gradient are constructed with the <code>brush</code> function which now takes a different form:</p>
-
-<div class="example">
-
 
 <pre><code>@import 'canvas';
 
@@ -440,19 +351,8 @@ html {
     paint
   );
 }
-</code></pre>
 
-<p><img src="assets/images/example-12.png" alt="Example 12" /></p>
-
-</div>
-
-
-
-
-<div class="example">
-
-
-<pre><code>@import 'canvas';
+@import 'canvas';
 
 html {
   background: canvas(100, 100,
@@ -467,18 +367,10 @@ html {
 }
 </code></pre>
 
-<p><img src="assets/images/example-13.png" alt="Example 13" /></p>
-
-</div>
-
-
 <p>The colour stops are defined as a list of colours. The stops will be placed evenly throughout the axis of the gradient.
 For example, a gradient with two colour stops will put these at (0%, 100%).
 Three colour stops will be placed at (0%, 50%, 100%).
 If you would like to adjust the offsets manually, add it next the colour:</p>
-
-<div class="example">
-
 
 <pre><code>@import 'canvas';
 
@@ -495,17 +387,9 @@ html {
 }
 </code></pre>
 
-<p><img src="assets/images/example-14.png" alt="Example 14" /></p>
-
-</div>
-
-
 <h4>Radial Gradients</h4>
 
 <p>Radial gradients are defined by two circles with <code>x</code>, <code>y</code> and <code>radius</code> properties:</p>
-
-<div class="example">
-
 
 <pre><code>@import 'canvas';
 
@@ -521,17 +405,9 @@ html {
 }
 </code></pre>
 
-<p><img src="assets/images/example-15.png" alt="Example 15" /></p>
-
-</div>
-
-
 <h3>Drawing revised</h3>
 
 <p>The default line width for a new canvas is 1. You can change it by using the <a href="#line-width"><code>line-width</code></a> function. The width will persist until you change it.</p>
-
-<div class="example">
-
 
 <pre><code>@import 'canvas';
 
@@ -553,16 +429,8 @@ html {
 }
 </code></pre>
 
-<p><img src="assets/images/example-16.png" alt="Example 16" /></p>
-
-</div>
-
-
 <p>When lines are drawn, different rules can be applied at their endpoints. In the example above, all lines use the default <a href="#line-cap-butt"><code>butt</code></a> style.
 You can also choose between <a href="#line-cap-square"><code>square</code></a> and <a href="#line-cap-round"><code>round</code></a>:</p>
-
-<div class="example">
-
 
 <pre><code>@import 'canvas';
 
@@ -588,11 +456,6 @@ html {
 }
 </code></pre>
 
-<p><img src="assets/images/example-17.png" alt="Example 17" /></p>
-
-</div>
-
-
 <p>A line with <code>square</code> and <code>round</code> endpoint styles will have different length from a line with the default <code>butt</code> style.</p>
 
 <h4>Dash patterns</h4>
@@ -604,9 +467,6 @@ Canvas lets you control the dash pattern so you can define any arbitrary outline
 
 <p>When called with two or more arguments, a new dash pattern is constructed and applied to all future <code>stroke</code> actions.
 The arguments are the lengths of the alternating on/off segments:</p>
-
-<div class="example">
-
 
 <pre><code>@import 'canvas';
 
@@ -642,18 +502,10 @@ html {
 }
 </code></pre>
 
-<p><img src="assets/images/example-18.png" alt="Example 18" /></p>
-
-</div>
-
-
 <h4>Fill Rules</h4>
 
 <p>If your shape is complex and potentially self-intersecting, fill rules determine how those intersecting regions will be treated.
 The default rule is <a href="#fill-rule-winding"><code>winding</code></a>:</p>
-
-<div class="example">
-
 
 <pre><code>@import 'canvas';
 
@@ -666,18 +518,10 @@ html {
 }
 </code></pre>
 
-<p><img src="assets/images/example-19.png" alt="Example 19" /></p>
-
-</div>
-
-
 <p>The first triangle is draw in order top-centre, bottom-left, bottom-right.
 The second triangle is draw in order top-left, bottom-centre, top-right.</p>
 
 <p>If you change the order of the second triangle to bottom-centre, top-left, top-right you would get different results:</p>
-
-<div class="example">
-
 
 <pre><code>@import 'canvas';
 
@@ -690,19 +534,11 @@ html {
 }
 </code></pre>
 
-<p><img src="assets/images/example-20.png" alt="Example 20" /></p>
-
-</div>
-
-
 <p>It is important to be very careful when intersecting paths. If you are unsure, split the path in individual shapes when possible.</p>
 
 <p>The only other rule is <a href="#fill-rule-even-odd"><code>even-odd</code></a> and it can be set using the <a href="#fill-rule"><code>fill-rule</code></a> function.
 It is easier to understand as it only counts the total number of intersections regardless of the order in which the operations were carried.
 If the total number is odd, the point will be filled. If the total number if even, the point will be left untouched.</p>
-
-<div class="example">
-
 
 <pre><code>@import 'canvas';
 
@@ -723,11 +559,6 @@ html {
 }
 </code></pre>
 
-<p><img src="assets/images/example-21.png" alt="Example 21" /></p>
-
-</div>
-
-
 <h3>Transforms</h3>
 
 <p>Paths can be moved, scaled and rotated. When you begin a transformation, it will be applied to all future paths.
@@ -743,36 +574,30 @@ You can create one by applying transformations to a circle:</p>
 <ul>
 <li><a href="#rotate"><code>rotate</code></a> - rotates paths by angle</li>
 <li><a href="#translate"><code>translate</code></a> - translates paths coordinates by (x, y)</li>
-<li><a href="#scale"><code>scale</code></a> - scales paths by (width, height)</li>
-</ul>
+<li><p><a href="#scale"><code>scale</code></a> - scales paths by (width, height)</p>
 
+<p>@import 'canvas';</p>
 
-<div class="example">
+<p>html {
+  background: canvas(320, 200,</p>
 
-
-<pre><code>@import 'canvas';
-
-html {
-  background: canvas(320, 200,
-    brush(#ccc)
-    paint
-    save
-      rotate(45)
-      translate(20, -80)
-      scale(1, 0.5)
-      circle(160, 100, 100)
-    restore
-    brush(red)
-    fill
-    brush(black)
-    stroke
-  );
-}
+<pre><code>brush(#ccc)
+paint
+save
+  rotate(45)
+  translate(20, -80)
+  scale(1, 0.5)
+  circle(160, 100, 100)
+restore
+brush(red)
+fill
+brush(black)
+stroke
 </code></pre>
 
-<p><img src="assets/images/example-22.png" alt="Example 22" /></p>
-
-</div>
+<p>  );
+}</p></li>
+</ul>
 
 
 <p>The order of transformations matters. In the example above, moving <code>translate</code> before <code>rotate</code> would yield different results.</p>
