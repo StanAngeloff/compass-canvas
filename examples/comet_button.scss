@@ -1,0 +1,74 @@
+@import 'compass';
+@import 'canvas';
+
+@mixin button($width, $height: 28px, $theme: #ccc) {
+  @include inline-block;
+  width: $width;
+  height: $height - 2px;
+  line-height: $height - 2px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  overflow: hidden;
+  color: #fff;
+  text-decoration: none;
+  @include text-shadow(0 1px 1px darken($theme, 25%));
+  background: canvas($width, $height,
+    rounded-rectangle(0.5, 0.5, $width - 0.5, $height - 0.5, 3px)
+    brush(0, 0, 0, $height, lighten($theme, 15%), $theme 75%, darken($theme, 5%))
+    fill
+    brush(darken($theme, 15%))
+    stroke
+    reset
+    rounded-rectangle(1.5, 1.5, $width - 1.5, $height - 1.5, 3px)
+    brush(0, 0, 0, $height, lighten($theme, 50%) 25%, $theme)
+    stroke
+  ) no-repeat;
+
+  &:hover {
+    background: canvas($width, $height,
+      rounded-rectangle(0.5, 0.5, $width - 0.5, $height - 0.5, 3px)
+      brush(0, 0, 0, $height, lighten($theme, 25%), $theme)
+      fill
+      brush(darken($theme, 25%))
+      stroke
+      reset
+      rounded-rectangle(1.5, 1.5, $width - 1.5, $height - 1.5, 3px)
+      brush(0, 0, 0, $height, lighten($theme, 50%) 25%, lighten($theme, 5%))
+      stroke
+    ) no-repeat;
+  }
+
+  &:active {
+    background: canvas($width, $height,
+      rounded-rectangle(0.5, 0.5, $width - 0.5, $height - 0.5, 3px)
+      brush(0, 0, 0, $height, darken($theme, 7.5%), darken($theme, 2.5%))
+      fill
+      brush(darken($theme, 25%))
+      stroke
+      reset
+      rounded-rectangle(1.5, 1.5, $width - 1.5, $height - 1.5, 3px)
+      brush(0, $height, 0, 0, lighten($theme, 5%) 25%, $theme)
+      stroke
+    ) no-repeat;
+    padding-top: 2px;
+    padding-bottom: 0;
+  }
+}
+
+a.buy     { @include button(100px, $theme: #5a1); }
+a.phone   { @include button(165px, $theme: #a10); }
+a.collect { @include button(165px, $theme: #15a); }
+
+// GENERAL -------------------------------------------------------------------
+
+a {
+  font-family: tahoma, verdana, helvetica, arial, sans-serif;
+  font-size: 12px;
+  -webkit-user-drag: none;
+  -moz-user-drag: none;
+}
+
+body {
+  margin: 10% 0;
+  text-align: center;
+}
