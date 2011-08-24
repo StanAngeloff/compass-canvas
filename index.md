@@ -13,8 +13,6 @@ Canvas supports anti-aliasing, vector graphics, gradients, masks, clipping, comp
   [turtle]: http://en.wikipedia.org/wiki/Turtle_graphics
   [cairo]:  http://en.wikipedia.org/wiki/Cairo_(graphics)
 
-<a href="http://twitter.com/share" class="twitter-share-button" data-text="Canvas in CSS using Compass/Sass and Cairo" data-count="none" data-via="StanAngeloff">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-
 Installation
 ------------
 
