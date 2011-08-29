@@ -6,6 +6,7 @@ module Compass::Canvas::Backend
   #
   # Each implementation must respond to four methods:
   # - {Compass::Canvas::Backend::Base::load_dependencies} - initializes the backend by loading third-party dependencies
+  # - {Compass::Canvas::Backend::Base::read_canvas} - reads a canvas from a file
   # - {Compass::Canvas::Backend::Base::begin_canvas} - initialization code before the canvas is drawn
   # - {Compass::Canvas::Backend::Base::execute_one} - executes a single action on the canvas
   # - {Compass::Canvas::Backend::Base::to_blob} - clean up code, must return a
@@ -35,7 +36,7 @@ module Compass::Canvas::Backend
       load_dependencies
       if args[0].is_a?(String)
         file = args.shift
-        unless args[1].is_a?(Fixnum)
+        unless args[0].is_a?(Fixnum)
           if file.include?('url(')
             file = File.join(Compass.configuration.css_path, file.gsub(/^url\(['"]?|["']?\)$/, '').split('?').shift())
           else
@@ -57,6 +58,15 @@ module Compass::Canvas::Backend
     #
     # @raise [Compass::Canvas::Exception] Backend implementation must override this method.
     def load_dependencies
+      raise Compass::Canvas::Exception.new("(#{self.class}) Class must implement '#{this_method}'.")
+    end
+
+    # Abstract method.
+    #
+    # Reads a canvas from a file
+    #
+    # @raise [Compass::Canvas::Exception] Backend implementation must override this method.
+    def read_canvas
       raise Compass::Canvas::Exception.new("(#{self.class}) Class must implement '#{this_method}'.")
     end
 
@@ -89,8 +99,13 @@ module Compass::Canvas::Backend
 
     # Creates an empty canvas and executes all stored actions.
     def execute
-      begin_canvas
-      execute_actions
+      if @width && @height
+        begin_canvas
+        execute_actions
+      else
+        read_canvas
+      end
+      self
     end
 
     # Returns the canvas as a Base64 encoded Data URI or as a file on disk
@@ -130,7 +145,6 @@ module Compass::Canvas::Backend
         end
         execute_one(action, *args)
       end
-      self
     end
 
     private

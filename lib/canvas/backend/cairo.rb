@@ -25,6 +25,12 @@ module Compass::Canvas::Backend
       end
     end
 
+    # Creates a new +ImageSurface+ from a file
+    def read_canvas
+      @surface = ::Cairo::ImageSurface.from_png(@file)
+      bind_context
+    end
+
     # Creates a new +ImageSurface+ and binds a new context to it.
     def begin_canvas
       if @width && @height
@@ -32,9 +38,7 @@ module Compass::Canvas::Backend
       else
         @surface = ::Cairo::ImageSurface.from_png(@file)
       end
-      @context = ::Cairo::Context.new(@surface)
-      @context.set_line_width(1)
-      @sources = []
+      bind_context
     end
 
     # Executes a single action on the context bound to the surface.
@@ -176,6 +180,12 @@ module Compass::Canvas::Backend
     end
 
     private
+
+    def bind_context
+      @context = ::Cairo::Context.new(@surface)
+      @context.set_line_width(1)
+      @sources = []
+    end
 
     def constant(name, *args)
       ::Cairo::const_get("#{ name.upcase }_#{ args.join('_').gsub('-', '_').upcase }")
