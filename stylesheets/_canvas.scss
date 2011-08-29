@@ -6,3 +6,22 @@
 // @function height-of(canvas) {}
 // @function path-x(canvas) {}
 // @function path-y(canvas) {}
+
+@function put-image($file, $x: 0, $y: 0) {
+  $canvas: canvas($file);
+  @if ($x == 'repeat') {
+    @return (
+      brush($canvas, $x)
+      paint
+    );
+  } @else {
+    @return (
+      save
+        translate($x, $y)
+        brush($canvas)
+        rectangle(0, 0, width-of($canvas), height-of($canvas))
+        fill
+      restore
+    );
+  }
+}
