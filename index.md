@@ -662,6 +662,27 @@ html {
 }
 ```
 
+#### Drawing Images
+
+Drawing images on the canvas is available since [0.0.5](https://github.com/StanAngeloff/compass-canvas/tree/0.0.5) using [`put-image`][ref-put-image]:
+
+```
+@import 'canvas';
+
+html {
+  background: canvas(100, 100,
+    rectangle(0, 0, 100, 100)
+    brush(yellow)
+    fill
+    brush(black)
+    stroke
+    **put-image('beer.png', 26, 20)**  // x = 26, y = 20
+  );
+}
+```
+
+The only supported file format at this time is PNG.
+
 ### Transforms
 
 Paths can be moved, scaled and rotated. When you begin a transformation, it will be applied to all future paths.
@@ -703,16 +724,16 @@ The order of transformations matters. In the example above, moving `translate` b
 
 Note the `fill` and `stroke` actions are placed after the `restore` action otherwise the line width for the `stroke` action will be scaled as well.
 
-<a name="arc-reverse"></a>
 <a name="arc"></a>
+<a name="arc-reverse"></a>
 <a name="brush"></a>
 <a name="circle"></a>
 <a name="curve-to"></a>
 <a name="dash-pattern"></a>
+<a name="fill"></a>
+<a name="fill-rule"></a>
 <a name="fill-rule-even-odd"></a>
 <a name="fill-rule-winding"></a>
-<a name="fill-rule"></a>
-<a name="fill"></a>
 <a name="line-cap-butt"></a>
 <a name="line-cap-round"></a>
 <a name="line-cap-square"></a>
@@ -720,6 +741,7 @@ Note the `fill` and `stroke` actions are placed after the `restore` action other
 <a name="line-width"></a>
 <a name="move-to"></a>
 <a name="paint"></a>
+<a name="put-image"></a>
 <a name="rectangle"></a>
 <a name="reset"></a>
 <a name="restore"></a>
@@ -761,6 +783,7 @@ For a complete reference on Cairo methods, visit [Pycairo documentation][pycairo
   [ref-line-width]:         #line-width
   [ref-move-to]:            #move-to
   [ref-paint]:              #paint
+  [ref-put-image]:          #put-image
   [ref-rectangle]:          #rectangle
   [ref-reset]:              #reset
   [ref-restore]:            #restore
