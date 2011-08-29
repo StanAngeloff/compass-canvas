@@ -6,7 +6,7 @@ require 'markdown'
 
 __DIR = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 
-Dir.glob(File.join(__DIR, 'assets/**', '*.png')).each do |image|
+Dir.glob(File.join(__DIR, 'assets/**', 'example-*.png')).each do |image|
   File.unlink(image)
 end
 
@@ -22,6 +22,7 @@ source = source.gsub(/```(.*?)```/m) do |group|
       ''
     end
   end
+  local = local.gsub(/\*\*/, '')
   local = local.gsub(/\bcanvas\(/, "canvas('example.png', ")
   File.open(File.join(__DIR, 'assets', 'example.scss'), 'wb') { |io| io << local }
   system("compass compile #{ File.join(__DIR, 'assets') } --force 1>/dev/null 2>&1")
@@ -44,6 +45,7 @@ end
 source = Markdown.new(source).to_html
 source = source.gsub("<!-- div class='example' -->", '<div class="example">');
 source = source.gsub("<!-- /div -->", '</div>');
+source = source.gsub(/\*\*(.*?)\*\*/, '<strong>\1</strong>')
 
 puts <<-EOD
 <!doctype html>

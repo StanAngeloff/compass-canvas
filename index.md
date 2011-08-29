@@ -39,18 +39,16 @@ Example
 ```
 @import 'canvas';
 
-$shape: triangle(10, 10, 310, 10, 160, 190);
-
 html {
   background: canvas(320, 200,
-    $shape
+    triangle(10, 10, 310, 10, 160, 190)
     brush(10, 10, 160, 100, rgba(red, 0.5) 50%, rgba(red, 0.75))
     fill
     reset
     save
       translate(40, 20)
       scale(0.75, 0.75)
-      $shape
+      triangle(10, 10, 310, 10, 160, 190)
       brush(black)
       stroke
       brush(10, 10, 160, 100, rgba(blue, 0.75) 50%, rgba(blue, 0.5))
@@ -89,7 +87,7 @@ Initialising a new canvas creates an empty surface (if you were to save it to di
 @import 'canvas';
 
 html {
-  background: canvas(320, 200);
+  background: **canvas(320, 200)**;
 }
 
 // @import 'canvas';
@@ -122,11 +120,11 @@ Creating paths in Canvas is similar - you pick a starting point, define the shap
 
 html {
   background: canvas(320, 200,
-    move-to(10, 10)   // start at top-left
-    line-to(310, 10)  // line to top-right (red)
-    line-to(310, 190) // line to bottom-right (green)
-    line-to(10, 190)  // line to bottom-left (blue)
-    close             // close the rectangle, i.e., line to top-left (hot pink)
+    **move-to**(10, 10)   // start at top-left
+    **line-to**(310, 10)  // line to top-right (red)
+    **line-to**(310, 190) // line to bottom-right (green)
+    **line-to**(10, 190)  // line to bottom-left (blue)
+    **close**             // close the rectangle, i.e., line to top-left (hot pink)
   );
 }
 
@@ -239,7 +237,7 @@ The only relevant function is [`brush`][ref-brush] which defines and sets the br
 
 html {
   background: canvas(320, 20,
-    brush(red)
+    **brush(red)**
   );
 }
 
@@ -274,16 +272,16 @@ Let's draw the rectangle from earlier:
 html {
   background: canvas(320, 200,
     brush(#ccc)
-    paint
+    **paint**
     move-to(10, 10)
     line-to(310, 10)
     line-to(310, 190)
     line-to(10, 190)
     close
     brush(yellow)
-    fill
+    **fill**
     brush(black)
-    stroke
+    **stroke**
   );
 }
 ```
@@ -301,7 +299,7 @@ Wrap the code in [`image-url`][image-url] to have the correct relative path and 
     @import 'canvas';
 
     html {
-      background: image-url(canvas('file.png', 320, 200,
+      background: image-url(canvas(**'file.png'**, 320, 200,
         brush(#ccc)
         paint
       ));
@@ -339,7 +337,7 @@ The return result of the function must be a [list][sass-lists] of Canvas operati
 
 html {
   background: canvas(320, 200,
-    my-shape(150, 90)
+    **my-shape(150, 90)**
     brush(black)
     stroke
   );
@@ -375,7 +373,7 @@ html {
     rectangle(10, 10, 100, 30)
     brush(red)
     fill
-    reset                       // start a new path
+    **reset**                       // start a new path
     rectangle(40, 50, 130, 70)
     brush(blue)
     fill
@@ -411,7 +409,7 @@ html {
 
 html {
   background: canvas(320, 100,
-    rectangle(10.5, 10.5, 310.5, 90.5)  // adjusted by .5
+    rectangle(10**.5**, 10**.5**, 310**.5**, 90**.5**)  // adjusted by .5
     stroke
   );
 }
@@ -513,7 +511,7 @@ The default line width for a new canvas is 1. You can change it by using the [`l
 
 html {
   background: canvas(320, 100,
-    line-width(20)
+    **line-width(20)**
     move-to(20, 20)
     line-to(200, 20)
     stroke
@@ -540,18 +538,18 @@ html {
     line-width(20)
     move-to(20, 20)
     line-to(200, 20)
-    line-cap(butt)   // default
+    **line-cap(butt)**   // default
     stroke
     reset
     move-to(20, 50)
     line-to(200, 50)
-    line-cap(square)
+    **line-cap(square)**
     stroke
     stroke
     reset
     move-to(20, 80)
     line-to(200, 80)
-    line-cap(round)
+    **line-cap(round)**
     stroke
   );
 }
@@ -573,31 +571,31 @@ The arguments are the lengths of the alternating on/off segments:
 @import 'canvas';
 
 html {
-  background: canvas(320, 50,
+  background: canvas(320, 80,
     move-to(10, 10)
     line-to(310, 10)
-    dash-pattern(4, 2)        // 4px drawn, 2px transparent, repeat
+    **dash-pattern(4, 2)**        // 4px drawn, 2px transparent, repeat
     brush(red)
-    stroke
-
-    reset
-    move-to(10, 20)
-    line-to(310, 20)
-    dash-pattern(2, 1, 1, 2)  // 2px drawn, 1px transparent, 1px drawn, 2px transparent, repeat
-    brush(green)
     stroke
 
     reset
     move-to(10, 30)
     line-to(310, 30)
-    dash-pattern(10, 10)      // 10px drawn, 10px transparent, repeat
+    **dash-pattern(2, 1, 1, 2)**  // 2px drawn, 1px transparent, 1px drawn, 2px transparent, repeat
+    brush(green)
+    stroke
+
+    reset
+    move-to(10, 50)
+    line-to(310, 50)
+    **dash-pattern(10, 10)**      // 10px drawn, 10px transparent, repeat
     brush(blue)
     stroke
 
     reset
-    move-to(10, 40)
-    line-to(310, 40)
-    dash-pattern(none)        // solid outline
+    move-to(10, 70)
+    line-to(310, 70)
+    **dash-pattern(none)**        // solid outline
     brush(#f0f)
     stroke
   );
@@ -655,7 +653,7 @@ html {
     fill                          // entire region is filled since directions of the two rectangle match
 
     reset
-    fill-rule(even-odd)           // change rule
+    **fill-rule(even-odd)**           // change rule
     rectangle(10, 130, 310, 220)  // first rectangle, total = 1
     rectangle(20, 140, 300, 210)  // intersection with first rectangle, total = 2
     brush(blue)                   // only fills points with total = 1, i.e., excludes the second rectangle
@@ -687,12 +685,12 @@ html {
   background: canvas(320, 200,
     brush(#ccc)
     paint
-    save
-      rotate(45)
-      translate(20, -80)
-      scale(1, 0.5)
+    **save**                     // save transformation matrix
+      **rotate**(45)
+      **translate**(20, -80)
+      **scale**(1, 0.5)
       circle(160, 100, 100)
-    restore
+    **restore**                  // restore saved transformation matrix
     brush(red)
     fill
     brush(black)
