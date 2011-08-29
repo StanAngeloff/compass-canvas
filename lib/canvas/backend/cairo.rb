@@ -129,8 +129,8 @@ module Compass::Canvas::Backend
             pattern.set_extend(constant('EXTEND', args))
             @context.mask(pattern)
           else
-            x = args.shift if args.length
-            y = args.shift if args.length
+            x = args.shift if args.length > 0
+            y = args.shift if args.length > 0
             @context.mask(surface, x || 0, y || 0)
           end
         elsif type == Compass::Canvas::Actions::RETRIEVE
@@ -154,7 +154,7 @@ module Compass::Canvas::Backend
           canvas = args.shift
           if canvas.is_a?(Compass::Canvas::Backend::Cairo)
             pattern = ::Cairo::SurfacePattern.new(canvas.execute.surface)
-            pattern.set_extend(constant('EXTEND', args)) if args.length
+            pattern.set_extend(constant('EXTEND', args)) if args.length > 0
             @context.set_source(pattern)
           else
             raise Compass::Canvas::Exception.new("(#{self.class}.#{action}) Unsupported canvas, Cairo can only paint with Cairo: #{canvas.inspect}")
