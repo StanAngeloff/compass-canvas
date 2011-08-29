@@ -87,7 +87,7 @@ Initialising a new canvas creates an empty surface (if you were to save it to di
 @import 'canvas';
 
 html {
-  background: **canvas(320, 200)**;
+  background: **canvas(320, 200)** no-repeat;
 }
 
 // @import 'canvas';
@@ -105,6 +105,9 @@ html {
 //   );
 // }
 ```
+
+Note the `no-repeat` following the `canvas(..)`.
+You must add this when you are using a canvas alone for the value of the `background` property.
 
 ### Paths
 
@@ -125,7 +128,7 @@ html {
     **line-to**(310, 190) // line to bottom-right (green)
     **line-to**(10, 190)  // line to bottom-left (blue)
     **close**             // close the rectangle, i.e., line to top-left (hot pink)
-  );
+  ) no-repeat;
 }
 
 // @import 'canvas';
@@ -183,7 +186,7 @@ html {
     move-to(180, 110)                 // right eye (orange)
     line-to(200, 110)
     arc-reverse(190, 110, 10, 180, 0)
-  );
+  ) no-repeat;
 }
 
 // @import 'canvas';
@@ -238,7 +241,7 @@ The only relevant function is [`brush`][ref-brush] which defines and sets the br
 html {
   background: canvas(320, 20,
     **brush(red)**
-  );
+  ) no-repeat;
 }
 
 // @import 'canvas';
@@ -282,7 +285,7 @@ html {
     **fill**
     brush(black)
     **stroke**
-  );
+  ) no-repeat;
 }
 ```
 
@@ -340,7 +343,7 @@ html {
     **my-shape(150, 90)**
     brush(black)
     stroke
-  );
+  ) no-repeat;
 }
 ```
 
@@ -358,7 +361,7 @@ html {
     rectangle(40, 50, 130, 70)
     brush(blue)
     fill
-  );
+  ) no-repeat;
 }
 ```
 
@@ -377,7 +380,7 @@ html {
     rectangle(40, 50, 130, 70)
     brush(blue)
     fill
-  );
+  ) no-repeat;
 }
 ```
 
@@ -392,7 +395,7 @@ html {
   background: canvas(320, 100,
     rectangle(10, 10, 310, 90)
     stroke
-  );
+  ) no-repeat;
 }
 ```
 
@@ -411,7 +414,7 @@ html {
   background: canvas(320, 100,
     rectangle(10**.5**, 10**.5**, 310**.5**, 90**.5**)  // adjusted by .5
     stroke
-  );
+  ) no-repeat;
 }
 ```
 
@@ -442,7 +445,7 @@ html {
       #f00, #0f0, #00f  // colour stops
     )
     paint
-  );
+  ) no-repeat;
 }
 ```
 
@@ -458,7 +461,7 @@ html {
       #f00, #0f0, #00f  // colour stops
     )
     paint
-  );
+  ) no-repeat;
 }
 ```
 
@@ -479,7 +482,7 @@ html {
       #f00 25%, #0f0, #00f 75%  // colour stops, note the additional offsets
     )
     paint
-  );
+  ) no-repeat;
 }
 ```
 
@@ -498,7 +501,7 @@ html {
       #000, #ccc, #fff  // colour stops
     )
     paint
-  );
+  ) no-repeat;
 }
 ```
 
@@ -523,7 +526,7 @@ html {
     move-to(20, 80)
     line-to(200, 80)
     stroke
-  );
+  ) no-repeat;
 }
 ```
 
@@ -551,7 +554,7 @@ html {
     line-to(200, 80)
     **line-cap(round)**
     stroke
-  );
+  ) no-repeat;
 }
 ```
 
@@ -598,7 +601,7 @@ html {
     **dash-pattern(none)**        // solid outline
     brush(#f0f)
     stroke
-  );
+  ) no-repeat;
 }
 ```
 
@@ -615,7 +618,7 @@ html {
     triangle(160, 10, 10, 90, 310, 90)
     triangle(60, 50, 160, 90, 260, 50)
     fill
-  );
+  ) no-repeat;
 }
 ```
 
@@ -632,7 +635,7 @@ html {
     triangle(160, 10, 10, 90, 310, 90)
     triangle(160, 90, 60, 50, 260, 50)
     fill
-  );
+  ) no-repeat;
 }
 ```
 
@@ -658,7 +661,7 @@ html {
     rectangle(20, 140, 300, 210)  // intersection with first rectangle, total = 2
     brush(blue)                   // only fills points with total = 1, i.e., excludes the second rectangle
     fill
-  );
+  ) no-repeat;
 }
 ```
 
@@ -677,7 +680,7 @@ html {
     brush(black)
     stroke
     **put-image('beer.png', 26, 20)**  // x = 26, y = 20
-  );
+  ) no-repeat;
 }
 ```
 
@@ -716,7 +719,7 @@ html {
     fill
     brush(black)
     stroke
-  );
+  ) no-repeat;
 }
 ```
 
@@ -748,7 +751,7 @@ html {
       brush(#f00)
       stroke
     )
-  );
+  ) no-repeat;
 }
 ```
 
@@ -771,7 +774,7 @@ html {
       brush(#f00)
       stroke
     )
-  );
+  ) no-repeat;
 }
 ```
 
@@ -789,7 +792,7 @@ html {
       brush(#888)
       fill
     )
-  );
+  ) no-repeat;
 }
 ```
 

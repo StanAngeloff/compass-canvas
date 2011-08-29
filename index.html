@@ -99,7 +99,7 @@ Initialising a new canvas creates an empty surface (if you were to save it to di
 <pre><code>@import 'canvas';
 
 html {
-  background: <strong>canvas(320, 200)</strong>;
+  background: <strong>canvas(320, 200)</strong> no-repeat;
 }
 </code></pre>
 
@@ -107,6 +107,9 @@ html {
 
 </div>
 
+
+<p>Note the <code>no-repeat</code> following the <code>canvas(..)</code>.
+You must add this when you are using a canvas alone for the value of the <code>background</code> property.</p>
 
 <h3>Paths</h3>
 
@@ -129,7 +132,7 @@ html {
     <strong>line-to</strong>(310, 190) // line to bottom-right (green)
     <strong>line-to</strong>(10, 190)  // line to bottom-left (blue)
     <strong>close</strong>             // close the rectangle, i.e., line to top-left (hot pink)
-  );
+  ) no-repeat;
 }
 </code></pre>
 
@@ -172,7 +175,7 @@ html {
     move-to(180, 110)                 // right eye (orange)
     line-to(200, 110)
     arc-reverse(190, 110, 10, 180, 0)
-  );
+  ) no-repeat;
 }
 </code></pre>
 
@@ -196,7 +199,7 @@ The only relevant function is <a href="#brush"><code>brush</code></a> which defi
 html {
   background: canvas(320, 20,
     <strong>brush(red)</strong>
-  );
+  ) no-repeat;
 }
 </code></pre>
 
@@ -241,7 +244,7 @@ html {
     <strong>fill</strong>
     brush(black)
     <strong>stroke</strong>
-  );
+  ) no-repeat;
 }
 </code></pre>
 
@@ -306,7 +309,7 @@ html {
     <strong>my-shape(150, 90)</strong>
     brush(black)
     stroke
-  );
+  ) no-repeat;
 }
 </code></pre>
 
@@ -331,7 +334,7 @@ html {
     rectangle(40, 50, 130, 70)
     brush(blue)
     fill
-  );
+  ) no-repeat;
 }
 </code></pre>
 
@@ -357,7 +360,7 @@ html {
     rectangle(40, 50, 130, 70)
     brush(blue)
     fill
-  );
+  ) no-repeat;
 }
 </code></pre>
 
@@ -379,7 +382,7 @@ html {
   background: canvas(320, 100,
     rectangle(10, 10, 310, 90)
     stroke
-  );
+  ) no-repeat;
 }
 </code></pre>
 
@@ -405,7 +408,7 @@ html {
   background: canvas(320, 100,
     rectangle(10<strong>.5</strong>, 10<strong>.5</strong>, 310<strong>.5</strong>, 90<strong>.5</strong>)  // adjusted by .5
     stroke
-  );
+  ) no-repeat;
 }
 </code></pre>
 
@@ -439,7 +442,7 @@ html {
       #f00, #0f0, #00f  // colour stops
     )
     paint
-  );
+  ) no-repeat;
 }
 </code></pre>
 
@@ -464,7 +467,7 @@ html {
       #f00, #0f0, #00f  // colour stops
     )
     paint
-  );
+  ) no-repeat;
 }
 </code></pre>
 
@@ -492,7 +495,7 @@ html {
       #f00 25%, #0f0, #00f 75%  // colour stops, note the additional offsets
     )
     paint
-  );
+  ) no-repeat;
 }
 </code></pre>
 
@@ -518,7 +521,7 @@ html {
       #000, #ccc, #fff  // colour stops
     )
     paint
-  );
+  ) no-repeat;
 }
 </code></pre>
 
@@ -550,7 +553,7 @@ html {
     move-to(20, 80)
     line-to(200, 80)
     stroke
-  );
+  ) no-repeat;
 }
 </code></pre>
 
@@ -585,7 +588,7 @@ html {
     line-to(200, 80)
     <strong>line-cap(round)</strong>
     stroke
-  );
+  ) no-repeat;
 }
 </code></pre>
 
@@ -639,7 +642,7 @@ html {
     <strong>dash-pattern(none)</strong>        // solid outline
     brush(#f0f)
     stroke
-  );
+  ) no-repeat;
 }
 </code></pre>
 
@@ -663,7 +666,7 @@ html {
     triangle(160, 10, 10, 90, 310, 90)
     triangle(60, 50, 160, 90, 260, 50)
     fill
-  );
+  ) no-repeat;
 }
 </code></pre>
 
@@ -687,7 +690,7 @@ html {
     triangle(160, 10, 10, 90, 310, 90)
     triangle(160, 90, 60, 50, 260, 50)
     fill
-  );
+  ) no-repeat;
 }
 </code></pre>
 
@@ -720,7 +723,7 @@ html {
     rectangle(20, 140, 300, 210)  // intersection with first rectangle, total = 2
     brush(blue)                   // only fills points with total = 1, i.e., excludes the second rectangle
     fill
-  );
+  ) no-repeat;
 }
 </code></pre>
 
@@ -746,7 +749,7 @@ html {
     brush(black)
     stroke
     <strong>put-image('beer.png', 26, 20)</strong>  // x = 26, y = 20
-  );
+  ) no-repeat;
 }
 </code></pre>
 
@@ -795,7 +798,7 @@ html {
     fill
     brush(black)
     stroke
-  );
+  ) no-repeat;
 }
 </code></pre>
 
@@ -837,7 +840,7 @@ html {
       brush(#f00)
       stroke
     )
-  );
+  ) no-repeat;
 }
 </code></pre>
 
@@ -867,7 +870,7 @@ html {
       brush(#f00)
       stroke
     )
-  );
+  ) no-repeat;
 }
 </code></pre>
 
@@ -892,7 +895,7 @@ html {
       brush(#888)
       fill
     )
-  );
+  ) no-repeat;
 }
 </code></pre>
 
