@@ -49,7 +49,8 @@ module Compass::Canvas::Backend
         @width  = args.shift
         @height = args.shift
       end
-      @actions = args
+      @actions  = args
+      @executed = false
     end
 
     # Abstract method.
@@ -99,12 +100,14 @@ module Compass::Canvas::Backend
 
     # Creates an empty canvas and executes all stored actions.
     def execute
+      return self if @executed
       if @width && @height
         begin_canvas
         execute_actions
       else
         read_canvas
       end
+      @executed = true
       self
     end
 
