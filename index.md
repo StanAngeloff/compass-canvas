@@ -724,6 +724,75 @@ The order of transformations matters. In the example above, moving `translate` b
 
 Note the `fill` and `stroke` actions are placed after the `restore` action otherwise the line width for the `stroke` action will be scaled as well.
 
+### Effects
+
+Canvas supports blur and shadow effects, however they are very slow compared to the rest of the library as they operate on a per-pixel level.
+The relevant functions are:
+
+  - [`slow-blur`][ref-slow-blur] - creates a new canvas, executes all commands, applies the blur effect and places the resulting image back on the source
+  - [`slow-drop-shadow`][ref-slow-drop-shadow] - uses `slow-blur` to emulate a drop shadow effect
+
+```
+@import 'canvas';
+
+html {
+  background: canvas(320, 100,
+    brush(#ccc)
+    paint
+    **slow-blur**(8,                                  // radius = 8
+      rounded-rectangle(10, 10, 310, 90, 10)
+      brush(#00f)
+      stroke
+      reset
+      rectangle(30, 30, 190, 70)
+      brush(#f00)
+      stroke
+    )
+  );
+}
+```
+
+The drop shadow effect uses `slow-blur` to emulate the effect. It creates two images - one with the blur applied (bottom) and another without the blur (top) and composes the two together.
+As the name of the function suggests, this is a CPU expensive process and may take a while to execute:
+
+```
+@import 'canvas';
+
+html {
+  background: canvas(320, 100,
+    brush(#ccc)
+    paint
+    **slow-drop-shadow**(1, 2, 10, brush(#888),  // x = 1, y = 2, radius = 10
+      rounded-rectangle(10, 10, 310, 90, 10)
+      brush(#00f)
+      stroke
+      reset
+      rectangle(30, 30, 190, 70)
+      brush(#f00)
+      stroke
+    )
+  );
+}
+```
+
+Since `slow-drop-shadow` accepts any brush, you can use gradients for the shadow as well:
+
+```
+@import 'canvas';
+
+html {
+  background: canvas(320, 100,
+    brush(#ccc)
+    paint
+    slow-drop-shadow(1, 1, 10, **brush(0, 10, 0, 90, red, green, blue)**,  // x = 1, y = 2, radius = 10
+      rounded-rectangle(10, 10, 310, 90, 10)
+      brush(#888)
+      fill
+    )
+  );
+}
+```
+
 <a name="arc"></a>
 <a name="arc-reverse"></a>
 <a name="brush"></a>
@@ -749,6 +818,8 @@ Note the `fill` and `stroke` actions are placed after the `restore` action other
 <a name="rounded-rectangle"></a>
 <a name="save"></a>
 <a name="scale"></a>
+<a name="slow-blur"></a>
+<a name="slow-drop-shadow"></a>
 <a name="stroke"></a>
 <a name="translate"></a>
 <a name="triangle"></a>
@@ -791,6 +862,8 @@ For a complete reference on Cairo methods, visit [Pycairo documentation][pycairo
   [ref-rounded-rectangle]:  #rounded-rectangle
   [ref-save]:               #save
   [ref-scale]:              #scale
+  [ref-slow-blur]:          #slow-blur
+  [ref-slow-drop-shadow]:   #slow-drop-shadow
   [ref-stroke]:             #stroke
   [ref-translate]:          #translate
   [ref-triangle]:           #triangle

@@ -808,6 +808,99 @@ html {
 
 <p>Note the <code>fill</code> and <code>stroke</code> actions are placed after the <code>restore</code> action otherwise the line width for the <code>stroke</code> action will be scaled as well.</p>
 
+<h3>Effects</h3>
+
+<p>Canvas supports blur and shadow effects, however they are very slow compared to the rest of the library as they operate on a per-pixel level.
+The relevant functions are:</p>
+
+<ul>
+<li><a href="#slow-blur"><code>slow-blur</code></a> - creates a new canvas, executes all commands, applies the blur effect and places the resulting image back on the source</li>
+<li><a href="#slow-drop-shadow"><code>slow-drop-shadow</code></a> - uses <code>slow-blur</code> to emulate a drop shadow effect</li>
+</ul>
+
+
+<div class="example">
+
+
+<pre><code>@import 'canvas';
+
+html {
+  background: canvas(320, 100,
+    brush(#ccc)
+    paint
+    <strong>slow-blur</strong>(8,                                  // radius = 8
+      rounded-rectangle(10, 10, 310, 90, 10)
+      brush(#00f)
+      stroke
+      reset
+      rectangle(30, 30, 190, 70)
+      brush(#f00)
+      stroke
+    )
+  );
+}
+</code></pre>
+
+<p><img src="assets/images/example-24.png" alt="Example 24" /></p>
+
+</div>
+
+
+<p>The drop shadow effect uses <code>slow-blur</code> to emulate the effect. It creates two images - one with the blur applied (bottom) and another without the blur (top) and composes the two together.
+As the name of the function suggests, this is a CPU expensive process and may take a while to execute:</p>
+
+<div class="example">
+
+
+<pre><code>@import 'canvas';
+
+html {
+  background: canvas(320, 100,
+    brush(#ccc)
+    paint
+    <strong>slow-drop-shadow</strong>(1, 2, 10, brush(#888),  // x = 1, y = 2, radius = 10
+      rounded-rectangle(10, 10, 310, 90, 10)
+      brush(#00f)
+      stroke
+      reset
+      rectangle(30, 30, 190, 70)
+      brush(#f00)
+      stroke
+    )
+  );
+}
+</code></pre>
+
+<p><img src="assets/images/example-25.png" alt="Example 25" /></p>
+
+</div>
+
+
+<p>Since <code>slow-drop-shadow</code> accepts any brush, you can use gradients for the shadow as well:</p>
+
+<div class="example">
+
+
+<pre><code>@import 'canvas';
+
+html {
+  background: canvas(320, 100,
+    brush(#ccc)
+    paint
+    slow-drop-shadow(1, 1, 10, <strong>brush(0, 10, 0, 90, red, green, blue)</strong>,  // x = 1, y = 2, radius = 10
+      rounded-rectangle(10, 10, 310, 90, 10)
+      brush(#888)
+      fill
+    )
+  );
+}
+</code></pre>
+
+<p><img src="assets/images/example-26.png" alt="Example 26" /></p>
+
+</div>
+
+
 <p><a name="arc"></a>
 <a name="arc-reverse"></a>
 <a name="brush"></a>
@@ -833,6 +926,8 @@ html {
 <a name="rounded-rectangle"></a>
 <a name="save"></a>
 <a name="scale"></a>
+<a name="slow-blur"></a>
+<a name="slow-drop-shadow"></a>
 <a name="stroke"></a>
 <a name="translate"></a>
 <a name="triangle"></a></p>
