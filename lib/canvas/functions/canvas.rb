@@ -16,6 +16,34 @@ module Compass::Canvas
         end
         klass.new(*Compass::Canvas::Functions.unpack(args).flatten)
       end
+
+      # Gets the width of a {Compass::Canvas::Backend}.
+      #
+      # @return [Compass::Canvas::Backend] The width of the backend.
+      def width_of(canvas)
+        Sass::Script::Number.new(canvas.property(:width))
+      end
+
+      # Gets the height of a {Compass::Canvas::Backend}.
+      #
+      # @return [Compass::Canvas::Backend] The height of the backend.
+      def height_of(canvas)
+        Sass::Script::Number.new(canvas.property(:height))
+      end
+
+      # Gets the X position of the current path on a {Compass::Canvas::Backend}.
+      #
+      # @return [Compass::Canvas::Backend] The X position of the current backend path.
+      def path_x(canvas)
+        Sass::Script::Number.new(canvas.property(:x))
+      end
+
+      # Gets the Y position of the current path on a {Compass::Canvas::Backend}.
+      #
+      # @return [Compass::Canvas::Backend] The Y position of the current backend path.
+      def path_y(canvas)
+        Sass::Script::Number.new(canvas.property(:y))
+      end
     end
   end
 end

@@ -98,6 +98,21 @@ module Compass::Canvas::Backend
       raise Compass::Canvas::Exception.new("(#{self.class}) Class must implement '#{this_method}'.")
     end
 
+    # Reads a property of the backend.
+    #
+    # This can be used to provide custom information about a backend, such as
+    # width, height, the current point's position, etc.
+    #
+    # @param [String] name The property name.
+    # @return [Object] The property value, or nil if it doesn't exist.
+    def property(name)
+      case name
+      when :width;  return @width
+      when :height; return @height
+      else return nil
+      end
+    end
+
     # Creates an empty canvas and executes all stored actions.
     def execute
       return self if @executed

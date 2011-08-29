@@ -25,6 +25,24 @@ module Compass::Canvas::Backend
       end
     end
 
+    # Reads a property of the Cairo backend.
+    #
+    # This can be used to obtain information about the width/height of the
+    # surface as well as the current point's X/Y coordinates.
+    #
+    # @param [String] name The property name.
+    # @return [Object] The property value, or nil if it doesn't exist.
+    def property(name)
+      execute
+      case name
+      when :width;  return @surface.width
+      when :height; return @surface.height
+      when :x;      return @context.current_point[0]
+      when :y;      return @context.current_point[1]
+      else return nil
+      end
+    end
+
     # Creates a new +ImageSurface+ from a file
     def read_canvas
       @surface = ::Cairo::ImageSurface.from_png(@file)
