@@ -48,18 +48,25 @@ You can usually install these using your OS package manager.</p>
 
 html {
   background: canvas(320, 200,
-    triangle(10, 10, 310, 10, 160, 190)
-    brush(10, 10, 160, 100, rgba(red, 0.5) 50%, rgba(red, 0.75))
-    fill
-    reset
+    brush(#efefef)
+    paint
     save
-      translate(40, 20)
-      scale(0.75, 0.75)
-      triangle(10, 10, 310, 10, 160, 190)
-      brush(black)
+      rotate(10deg)
+      translate(20, 0)
+      put-image('beer.png', 10, 76)
+    restore
+    reset
+    line-width(5)
+    save
+      rotate(-10deg)
+      translate(50, 70)
+      move-to(0, 0)    line-to(0, 100)   line-to(0, 50)  line-to(30, 50) line-to(30, 0)  line-to(30, 100)
+      move-to(80, 0)   line-to(50, 0)    line-to(50, 50) line-to(80, 50) line-to(50, 50) line-to(50, 100) line-to(80, 100)
+      move-to(100, 0)  line-to(100, 100) line-to(130, 100)
+      move-to(150, 0)  line-to(150, 100) line-to(180, 100)
+      move-to(200, 15) arc(215, 15, 15, 180, 0) line-to(230, 85) arc(215, 85, 15, 0, 180) line-to(200, 15)
+      brush(0, 0, 230, 100, red, green, blue)
       stroke
-      brush(10, 10, 160, 100, rgba(blue, 0.75) 50%, rgba(blue, 0.5))
-      fill
     restore
   ) no-repeat 50% 50%;
 }
