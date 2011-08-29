@@ -20,6 +20,19 @@ module Compass::Canvas
     File.expand_path(File.join(File.dirname(__FILE__), '..', directory))
   end
 
+  # Helper function to normalize a CSS path to a filesystem path.
+  #
+  # @param [String] file A CSS file, usually with url(..) and optionally a cache buster.
+  # @return [String] The absolute filesystem path.
+  def self.absolute_path_to(file)
+    if file.include?('url(')
+      file = File.join(Compass.configuration.css_path, file.gsub(/^url\(['"]?|["']?\)$/, ''))
+    else
+      file = File.join(Compass.configuration.images_path, file)
+    end
+    file.split('?').shift()
+  end
+
   # Locations where plug-ins are installed. These paths are scanned for *.rb files
   # and loaded in order.
   PLUGINS_PATH = [

@@ -36,13 +36,7 @@ module Compass::Canvas::Backend
       load_dependencies
       if args[0].is_a?(String)
         file = args.shift
-        unless args[0].is_a?(Fixnum)
-          if file.include?('url(')
-            file = File.join(Compass.configuration.css_path, file.gsub(/^url\(['"]?|["']?\)$/, '').split('?').shift())
-          else
-            file = File.join(Compass.configuration.images_path, file.split('?').shift())
-          end
-        end
+        file = Compass::Canvas.absolute_path_to(file) unless args[0].is_a?(Fixnum)
         @file = file
       end
       if args[0].is_a?(Fixnum)
