@@ -46,6 +46,14 @@ module Compass::Canvas::Backend
         @context.line_to(*args)
       when Compass::Canvas::Actions::CURVE
         @context.curve_to(*args)
+      when Compass::Canvas::Actions::QUADRATIC_CURVE
+        x1, y1, x2, y2 = args
+        x, y = @context.current_point
+        @context.curve_to(
+          x  + 2.0 / 3.0 * (x1 - x),  y  + 2.0 / 3.0 * (y1 - y),
+          x2 + 2.0 / 3.0 * (x1 - x2), y2 + 2.0 / 3.0 * (y1 - y2),
+          x2, y2
+        )
       when Compass::Canvas::Actions::ARC
         @context.arc(*args)
       when Compass::Canvas::Actions::ARC_REVERSE

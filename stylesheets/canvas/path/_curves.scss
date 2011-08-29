@@ -1,0 +1,7 @@
+@function bezier-curve-to($x1, $y1, $x2, $y2, $x3, $y3) {
+  @return curve-to($x1, $y1, $x2, $y2, $x3, $y3);
+}
+
+@function quadratic-curve-to($x1, $y1, $x2, $y2) {
+  @return canvas-path('quadratic_curve', $x1, $y1, $x2, $y2);
+}
